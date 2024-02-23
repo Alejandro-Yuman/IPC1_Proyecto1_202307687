@@ -7,6 +7,7 @@ package sistemahospital;
 import conta_usuarios.ListaUsuarios;
 import objetos.Administrador;
 import utils.Autenticacion;
+import vistas.Login;
 
 /**
  *
@@ -24,9 +25,12 @@ public class SistemaHospital {
         
         Autenticacion.registro("Eso tilines 1 Paciente","Ap",18,'M',"Contraseña");
         Autenticacion.registro("Eso tilines 2 Paciente","Ap",18,'M',"holaTilin");
+
         
         ListaUsuarios.getUsuarios();
-        Autenticacion.iniciarSesion(2, "Contraseña");
+        
+        
+        Login login = new Login();
 
     }
     

@@ -6,6 +6,7 @@ package utils;
 
 import objetos.Usuario;
 import conta_usuarios.ListaUsuarios;
+import conta_usuarios.SesionActual;
 import objetos.Paciente;
 
 /**
@@ -14,8 +15,9 @@ import objetos.Paciente;
  */
 public class Autenticacion {
     
-    public static void iniciarSesion(int codigo, String contra){
-        verificarUsuario(codigo,contra);
+    public static boolean iniciarSesion(int codigo, String contra){
+        
+        return verificarUsuario(codigo,contra);
     }
     
     public static void registro(String nombre, String apellido, int edad, char sexo, String contraseña){
@@ -23,16 +25,18 @@ public class Autenticacion {
         ListaUsuarios.addUsuarios(paciente);
     }
     
-    static void verificarUsuario(int codigo, String contra){
+    static boolean verificarUsuario(int codigo, String contra){
         Usuario tempUs = ListaUsuarios.getUsuario(codigo);
         if(tempUs != null){
             if(tempUs.getContraseña().equals(contra)){
-                System.out.println("Inicio sesion exitoso");
+                SesionActual.asignarSesion(tempUs);
+                return true;
+                
             }else{
-                System.out.println("Credenciales de inicio incorrecta2s");
+                return false;
             }
         }else{
-            System.out.println("Credenciales de inicio incorrectas1");
+            return false;
         }
     }
     

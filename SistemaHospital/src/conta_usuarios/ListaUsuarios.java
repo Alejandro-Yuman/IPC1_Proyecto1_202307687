@@ -48,17 +48,18 @@ public  class ListaUsuarios {
     }
     
     static int generarId(Usuario usuarioNuevo){
-        
-        for (int i = 0; i < usuarios.size(); i++) {
-            if(usuarios.get(i).getId() != (i+1)){
-                return i+1;
+        for (int i = 1; i < usuarios.size(); i++) {
+            if(usuarios.get(i).getId() != (i)){
+                return i;
             }
         }
-        if(usuarios.size() == 0){
+        if(usuarios.size() == 1){
             return 1;
         }else{
             return usuarios.getLast().getId()+1;
+            
         }
+        
 
     }
 
