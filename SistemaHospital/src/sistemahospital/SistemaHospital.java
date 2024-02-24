@@ -6,9 +6,12 @@ package sistemahospital;
 
 import conta_usuarios.ListaUsuarios;
 import objetos.Administrador;
+import objetos.Medico;
 import utils.Autenticacion;
 import vistas.Login;
+import vistas.MainAdministrador;
 import vistas.Mensaje;
+import vistas.Register;
 
 /**
  *
@@ -26,12 +29,19 @@ public class SistemaHospital {
         
         Autenticacion.registro("Eso tilines 1 Paciente","Ap",18,'M',"Contraseña");
         Autenticacion.registro("Eso tilines 2 Paciente","Ap",18,'M',"holaTilin");
-
+        Medico med = new Medico("Medico 1","Don",18,'M',"Dios",20202020,"Doctor psiquiatra");
+        ListaUsuarios.addUsuarios(med);
+        Medico med2 = new Medico("Medico 2","Doña",22,'F',"Diosayudame","Doctora psiquiatra");
+        ListaUsuarios.addUsuarios(med2);
+        
+        
         
         ListaUsuarios.getUsuarios();
         
         
-        Login login = new Login();
+        MainAdministrador login = new MainAdministrador();
+        //Login login = new Login();
+        //Register login = new Register();
 
     }
     

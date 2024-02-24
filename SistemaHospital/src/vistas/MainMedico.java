@@ -8,6 +8,7 @@ import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
+import utils.Colors;
 
 /**
  *
@@ -16,6 +17,7 @@ import javax.swing.JFrame;
 public class MainMedico extends JFrame implements ActionListener{
 
     public MainMedico() {
+        this.getContentPane().setBackground(Colors.background);
         this.setTitle("Menu Principal");
         this.setSize(500,500);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -3,6 +3,8 @@ package conta_usuarios;
 
 import objetos.Usuario;
 import java.util.ArrayList;
+import objetos.Medico;
+import objetos.Paciente;
 
 /**
  *
@@ -45,6 +47,36 @@ public  class ListaUsuarios {
     
     public static void addAdministrador(Usuario usuarioNuevo){
         usuarios.add(usuarioNuevo);
+    }
+    
+    public static int getNumeroRegistradosMedicos(){
+        int total = 0;
+        for (int i = 0; i < usuarios.size(); i++) {
+            if(usuarios.get(i) instanceof Medico){
+                total++;
+            }
+        }
+        return total;
+    }
+    
+    public static ArrayList<Medico> getMedicos(){
+        ArrayList<Medico> listaMedicos = new ArrayList<Medico>();
+        for (int i = 0; i < usuarios.size(); i++) {
+            if(usuarios.get(i) instanceof Medico){
+                listaMedicos.add((Medico)usuarios.get(i));
+            }
+        }
+        return listaMedicos;
+    }
+    
+    public static int getNumeroRegistradosPacientes(){
+        int total = 0;
+        for (int i = 0; i < usuarios.size(); i++) {
+            if(usuarios.get(i) instanceof Paciente){
+                total++;
+            }
+        }
+        return total;
     }
     
     static int generarId(Usuario usuarioNuevo){

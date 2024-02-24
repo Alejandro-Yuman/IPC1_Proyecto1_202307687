@@ -64,15 +64,15 @@ public class Mensaje extends JFrame implements ActionListener{
 
         JButton aceptarButton = new JButton("Aceptar");
         aceptarButton.setBounds(125, 100, 150, 50);
-        aceptarButton.setBackground(Colors.principal);
+        aceptarButton.setBackground(Colors.principalBotones);
         aceptarButton.addActionListener(this);
         this.add(aceptarButton);
         
         
-        
+        this.getContentPane().setBackground(Colors.background);
         this.setTitle("Alerta");
         this.setSize(400,200);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setResizable(false);
         
