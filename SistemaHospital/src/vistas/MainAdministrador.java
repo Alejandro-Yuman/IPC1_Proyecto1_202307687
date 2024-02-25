@@ -6,7 +6,6 @@ package vistas;
 
 import conta_usuarios.ListaUsuarios;
 import conta_usuarios.SesionActual;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -39,9 +38,27 @@ public class MainAdministrador extends JFrame implements ActionListener{
         logoLabel.setBounds(10, 10, 110, 30);
         this.add(logoLabel);
         
-        JLabel cakeLabel = new JLabel(Toolbox.adjustImage("../imgs/Cake.png", 50, 50));
+        /*JLabel cakeLabel = new JLabel(Toolbox.adjustImage("../imgs/Cake.png", 50, 50));
         cakeLabel.setBounds(1110, 10, 50, 50);
-        this.add(cakeLabel);
+        this.add(cakeLabel);*/
+        
+        
+        JButton cerrarSesionButton = new JButton("Cerrar Sesion");
+        cerrarSesionButton.setBounds(950,10,150,50);
+        cerrarSesionButton.setBackground(Colors.principalBotones);
+        cerrarSesionButton.setFont(Fuentes.getPrincipalFontSize(12, true));
+        cerrarSesionButton.setForeground(Colors.white);
+        cerrarSesionButton.addActionListener(this);
+        this.add(cerrarSesionButton);
+        
+        
+        
+        JButton pastelButton = new JButton();
+        pastelButton.setName("Pastel");
+        pastelButton.setIcon(Toolbox.adjustImage("../imgs/Cake.png", 50, 50));
+        pastelButton.setBounds(1110, 10, 50, 50);
+        pastelButton.setBorder(null);
+        this.add(pastelButton);
         
         
         JLabel tipoUsuarioLabel = new JLabel("Administrador");
@@ -77,7 +94,13 @@ public class MainAdministrador extends JFrame implements ActionListener{
             datos[i][0]=listaMedicos.get(i).getId();
             datos[i][1]=listaMedicos.get(i).getNombre();
             datos[i][2]=listaMedicos.get(i).getApellido();
-            datos[i][3]=listaMedicos.get(i).getSexo();
+            if(listaMedicos.get(i).getSexo() == 'M'){
+                datos[i][3]="Hombre";
+            }else if(listaMedicos.get(i).getSexo() == 'F'){
+                datos[i][3]="Mujer";
+            }
+            
+            //datos[i][3]=listaMedicos.get(i).getSexo();
             datos[i][4]=listaMedicos.get(i).getEdad();
             datos[i][5]=listaMedicos.get(i).getEspecialidad();
             datos[i][6]=listaMedicos.get(i).getTelefono();
@@ -160,6 +183,19 @@ public class MainAdministrador extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         JDialog dialogo = new JDialog(this);
+        
+        if(e.getActionCommand().equals("Cerrar Sesion")){
+            SesionActual.cerrarSesion();
+            Login login = new Login();
+            this.setVisible(false);
+            this.dispose();
+        }
+        if(e.getActionCommand().equals("Pastel")){
+            
+        }
+        
+        
+        
         if(e.getActionCommand().equals("Crear doctor")){
             
             
@@ -240,6 +276,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
             String[] lista = {"Seleccione una opción","Hombre","Mujer"};
             generoComboBox = new JComboBox(lista);
             generoComboBox.setBounds(110, 240, 200, 30);
+            generoComboBox.setFont(Fuentes.getPrincipalFontSize(12, true));
             dialogo.add(generoComboBox);
             
             JButton crearButton = new JButton("Guardar");
@@ -456,6 +493,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
             String[] lista = {"Seleccione una opción","Hombre","Mujer"};
             generoComboBox = new JComboBox(lista);
             generoComboBox.setBounds(110, 320, 200, 30);
+            generoComboBox.setFont(Fuentes.getPrincipalFontSize(12, true));
             generoComboBox.setEnabled(false);
             dialogo.add(generoComboBox);
             
@@ -693,6 +731,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
             }
         }
         
+
     }
     
     

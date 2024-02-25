@@ -53,6 +53,17 @@ public class SesionActual {
         SesionActual.contraseña = usuario.getContraseña();
     }
 
+    public static void cerrarSesion(){
+        SesionActual.usuarioEnUso = null;
+        SesionActual.id = -1;
+        SesionActual.nombre = "";
+        SesionActual.apellido = "";
+        SesionActual.edad = 0;
+        SesionActual.sexo= 'X';
+        SesionActual.contraseña = "";
+        SesionActual.tipo = -1;
+    }
+    
     public static Usuario getUsuarioEnUso() {
         return usuarioEnUso;
     }
