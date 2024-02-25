@@ -34,7 +34,6 @@ public  class ListaUsuarios {
         for (int i = 0; i < usuarios.size(); i++) {
             if(usuarios.get(i).getId() == id){
                 usuarios.remove(i);
-                System.out.println("Eliminado");
                 break;
             }
         }
@@ -45,19 +44,17 @@ public  class ListaUsuarios {
         usuarios.add(usuarioNuevo);
     }
     
-    public static void addAdministrador(Usuario usuarioNuevo){
-        usuarios.add(usuarioNuevo);
-    }
-    
-    public static int getNumeroRegistradosMedicos(){
-        int total = 0;
+    public static void editUsuario(Usuario usuarioNuevo, int id){
         for (int i = 0; i < usuarios.size(); i++) {
-            if(usuarios.get(i) instanceof Medico){
-                total++;
+            if(usuarios.get(i).getId() == id){
+                usuarios.set(i, usuarioNuevo);
+                break;
+                
             }
         }
-        return total;
     }
+    
+    
     
     public static ArrayList<Medico> getMedicos(){
         ArrayList<Medico> listaMedicos = new ArrayList<Medico>();
@@ -69,7 +66,25 @@ public  class ListaUsuarios {
         return listaMedicos;
     }
     
-    public static int getNumeroRegistradosPacientes(){
+    
+    
+    public static void addAdministrador(Usuario usuarioNuevo){
+        usuarios.add(usuarioNuevo);
+    }
+    
+    /*public static int getNumeroRegistradosMedicos(){
+        int total = 0;
+        for (int i = 0; i < usuarios.size(); i++) {
+            if(usuarios.get(i) instanceof Medico){
+                total++;
+            }
+        }
+        return total;
+    }*/
+    
+
+    
+    /*public static int getNumeroRegistradosPacientes(){
         int total = 0;
         for (int i = 0; i < usuarios.size(); i++) {
             if(usuarios.get(i) instanceof Paciente){
@@ -77,7 +92,7 @@ public  class ListaUsuarios {
             }
         }
         return total;
-    }
+    }*/
     
     static int generarId(Usuario usuarioNuevo){
         for (int i = 1; i < usuarios.size(); i++) {

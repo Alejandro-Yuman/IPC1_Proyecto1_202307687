@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import utils.Toolbox;
 import utils.Colors;
+import utils.Fuentes;
 
 /**
  *
@@ -29,7 +30,7 @@ public class Mensaje extends JFrame implements ActionListener{
             this.add(imageLabel);
         }
         
-        if(mensajeMostrar.length() <= 55){
+        /*if(mensajeMostrar.length() <= 55){
             JLabel mensajeLabel = new JLabel(mensajeMostrar);
             mensajeLabel.setBounds(50, 25, 300, 20);
             this.add(mensajeLabel);
@@ -49,15 +50,20 @@ public class Mensaje extends JFrame implements ActionListener{
                     pos +=20;
                 }
             }
-            JLabel mensajeLabel = new JLabel(temporal);
-            mensajeLabel.setBounds(50, pos, 300, 20);
+
+            JLabel mensajeLabel = new JLabel("<html>"+mensajeMostrar+"</html>");
+            mensajeLabel.setBounds(50, 20, 300, 20);
             this.add(mensajeLabel);
-        }
+        }*/
         
         
         
         
-        
+        JLabel mensajeLabel = new JLabel("<html>" + mensajeMostrar + "</html>");
+        mensajeLabel.setFont(Fuentes.getPrincipalFontSize(12, true));
+        mensajeLabel.setVerticalAlignment(SwingConstants.TOP);
+        mensajeLabel.setBounds(50, 20, 300, 100);
+        this.add(mensajeLabel);
         
         
 
@@ -65,6 +71,7 @@ public class Mensaje extends JFrame implements ActionListener{
         JButton aceptarButton = new JButton("Aceptar");
         aceptarButton.setBounds(125, 100, 150, 50);
         aceptarButton.setBackground(Colors.principalBotones);
+        aceptarButton.setForeground(Colors.white);
         aceptarButton.addActionListener(this);
         this.add(aceptarButton);
         

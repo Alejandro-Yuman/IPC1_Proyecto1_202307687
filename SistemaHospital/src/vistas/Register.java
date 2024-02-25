@@ -110,6 +110,7 @@ public class Register extends JFrame implements ActionListener{
         crearCuentaButton.setFont(Fuentes.getPrincipalFontSize(12, true));
         crearCuentaButton.setBounds(460,380,150,25);
         crearCuentaButton.setBackground(Colors.principalBotones);
+        crearCuentaButton.setForeground(Colors.white);
         crearCuentaButton.addActionListener(this);
         this.add(crearCuentaButton);
         
@@ -125,6 +126,7 @@ public class Register extends JFrame implements ActionListener{
         loginButton.setFont(Fuentes.getPrincipalFontSize(12, true));
         loginButton.setBounds(460,470,150,25);
         loginButton.setBackground(Colors.principalBotones);
+        loginButton.setForeground(Colors.white);
         loginButton.addActionListener(this);
         this.add(loginButton);
         

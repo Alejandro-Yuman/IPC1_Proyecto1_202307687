@@ -64,7 +64,7 @@ public class Login extends JFrame implements ActionListener{
         loginButton.setFont(Fuentes.getPrincipalFontSize(12, true));
         loginButton.setBounds(410, 260, 150, 25);
         loginButton.setBackground(Colors.principalBotones);
-        loginButton.setBorder(new LineBorder(Color.BLACK,2));
+        loginButton.setForeground(Colors.white);
         loginButton.addActionListener(this);
         this.add(loginButton);
         
@@ -78,7 +78,7 @@ public class Login extends JFrame implements ActionListener{
         registerButton.setFont(Fuentes.getPrincipalFontSize(12, true));
         registerButton.setBounds(410, 330, 150, 25);
         registerButton.setBackground(Colors.principalBotones);
-        registerButton.setBorder(new LineBorder(Color.BLACK,2));
+        registerButton.setForeground(Colors.white);
         registerButton.addActionListener(this);
         this.add(registerButton);
         
