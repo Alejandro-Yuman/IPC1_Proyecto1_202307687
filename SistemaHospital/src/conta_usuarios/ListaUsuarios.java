@@ -66,6 +66,16 @@ public  class ListaUsuarios {
         return listaMedicos;
     }
     
+    public static ArrayList<Paciente> getPacientes(){
+        ArrayList<Paciente> listaPacientes = new ArrayList<Paciente>();
+        for (int i = 0; i < usuarios.size(); i++) {
+            if(usuarios.get(i) instanceof Paciente){
+                listaPacientes.add((Paciente)usuarios.get(i));
+            }
+        }
+        return listaPacientes;
+    }
+    
     
     
     public static void addAdministrador(Usuario usuarioNuevo){
