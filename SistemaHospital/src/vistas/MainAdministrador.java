@@ -4,6 +4,7 @@
  */
 package vistas;
 
+import conta_usuarios.ListaProductos;
 import conta_usuarios.ListaUsuarios;
 import conta_usuarios.SesionActual;
 import java.awt.event.ActionEvent;
@@ -19,6 +20,7 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import objetos.Medico;
 import objetos.Paciente;
+import objetos.Producto;
 import objetos.Usuario;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -46,6 +48,12 @@ public class MainAdministrador extends JFrame implements ActionListener{
     JTextField edadField;
     JComboBox generoComboBox;
     
+    JTextField DescripcionField;
+    JTextField CantidadField;
+    JTextField PrecioField;
+    
+    
+    int largoBotonPestaña = 170;
     public MainAdministrador() {
         JLabel logoLabel = new JLabel(Toolbox.adjustImage("../imgs/LogoCompleto.png", 110, 30));
         logoLabel.setBounds(10, 10, 110, 30);
@@ -276,6 +284,104 @@ public class MainAdministrador extends JFrame implements ActionListener{
         panelProductos.setLayout(null);
         panelProductos.setBackground(Colors.white);
         tabbedPane.addTab("Productos", panelProductos);
+        
+
+        JLabel tituloProductosLabel = new JLabel("Listado de Productos");
+        tituloProductosLabel.setBounds(10,10,200,30);
+        tituloProductosLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
+        panelProductos.add(tituloProductosLabel);
+        
+        //Tabla de Medicos
+        ArrayList<Producto> listaProductos = ListaProductos.getProductos();
+
+        Object[][] datosProducto = new Object[listaProductos.size()][7];
+        for (int i = 0; i < listaProductos.size(); i++) {
+            datosProducto[i][0]=listaProductos.get(i).getId();
+            datosProducto[i][1]=listaProductos.get(i).getNombre();
+            datosProducto[i][2]=listaProductos.get(i).getCantidad();
+            datosProducto[i][3]=listaProductos.get(i).getDescripcion();
+            datosProducto[i][4]=listaProductos.get(i).getPrecio();
+            
+        }
+
+        String[] columnasProducto = {"Codigo","Nombre","Cantidad","Descripcion","Precio"};
+        
+        JTable tablaProductos = new JTable(datosProducto, columnasProducto);
+        tablaProductos.getColumnModel().getColumn(0).setPreferredWidth(5);
+        tablaProductos.setFont(Fuentes.getPrincipalFontSize(11,false));
+        JScrollPane spProductos = new JScrollPane(tablaProductos);
+        spProductos.setBounds(10, 50, 800, 500);
+        panelProductos.add(spProductos);
+        //Fin tabla
+        
+        //Inicio Grafica
+        DefaultCategoryDataset datos_Productos = new DefaultCategoryDataset(); 
+        
+        Map<String,Integer> productos = new HashMap();
+        
+        for (Producto producto : ListaProductos.getProductos()) {
+            String nombre = producto.getNombre();
+            if (productos.containsKey(nombre)) {
+                productos.put(nombre, productos.get(nombre)+1);
+            }else{
+                productos.put(nombre, 1);
+            }
+            
+        }
+        
+        List<Map.Entry<String,Integer> > listaOrdenada_Productos = new ArrayList(productos.entrySet());
+        Collections.sort(listaOrdenada_Productos,Comparator.comparing(Map.Entry::getValue,Comparator.reverseOrder()));
+        
+        contador = 0;
+        for (Map.Entry<String,Integer> datoMapa : listaOrdenada_Productos) {
+            contador++;
+            datos_Productos.addValue(datoMapa.getValue(),datoMapa.getKey(),datoMapa.getKey());
+            if(contador == 5){
+                break;
+            }
+        }
+        
+        JFreeChart graficaProducto = ChartFactory.createBarChart("Top 5 Productos", "Productos", "Cantidad", datos_Productos);
+        CategoryPlot plot_Producto = graficaProducto.getCategoryPlot();
+        CategoryAxis xAxis_Producto = plot_Producto.getDomainAxis();
+        xAxis_Producto.setCategoryLabelPositions(CategoryLabelPositions.UP_45);
+        
+        ChartPanel chartPanel_Producto = new ChartPanel(graficaProducto);
+        chartPanel_Producto.setBounds(820, 250, 300, 300);
+        panelProductos.add(chartPanel_Producto);
+        //Final Grafica
+        
+        
+        
+        
+        
+        JButton botonCrearProducto = new JButton("Crear producto");
+        botonCrearProducto.setBounds(850,50,250,50);
+        botonCrearProducto.setBackground(Colors.principalBotones);
+        botonCrearProducto.setFont(Fuentes.getPrincipalFontSize(12, true));
+        botonCrearProducto.setForeground(Colors.white);
+        botonCrearProducto.addActionListener(this);
+        panelProductos.add(botonCrearProducto);
+        
+        JButton botonActualizarProducto = new JButton("Actualizar producto");
+        botonActualizarProducto.setBounds(850,120,250,50);
+        botonActualizarProducto.setBackground(Colors.principalBotones);
+        botonActualizarProducto.setForeground(Colors.white);
+        botonActualizarProducto.setFont(Fuentes.getPrincipalFontSize(12, true));
+        botonActualizarProducto.addActionListener(this);
+        panelProductos.add(botonActualizarProducto);
+        
+        JButton botonEliminarproducto = new JButton("Eliminar producto");
+        botonEliminarproducto.setBounds(850,190,250,50);
+        botonEliminarproducto.setBackground(Colors.principalBotones);
+        botonEliminarproducto.setForeground(Colors.white);
+        botonEliminarproducto.setFont(Fuentes.getPrincipalFontSize(12, true));
+        botonEliminarproducto.addActionListener(this);
+        panelProductos.add(botonEliminarproducto);
+
+        
+        
+        
         //---------------------------------------Fin Pestaña Productos
         
         
@@ -398,7 +504,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
             
             JButton crearButton = new JButton("Guardar Doctor");
             crearButton.setFont(Fuentes.getPrincipalFontSize(12, true));
-            crearButton.setBounds(320, 320, 150, 25);
+            crearButton.setBounds(320, 320, largoBotonPestaña, 25);
             crearButton.setBackground(Colors.principalBotones);
             crearButton.setForeground(Colors.white);
             crearButton.addActionListener(this);
@@ -536,9 +642,6 @@ public class MainAdministrador extends JFrame implements ActionListener{
             dialogo.add(buscarButton);
             
             
-            JSeparator separador2 = new JSeparator();
-            separador.setBounds(0, 140, 1000, 1);
-            dialogo.add(separador);
             
             
             
@@ -618,7 +721,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
             
             JButton actualizarButton = new JButton("Editar Doctor");
             actualizarButton.setFont(Fuentes.getPrincipalFontSize(12, true));
-            actualizarButton.setBounds(320, 420, 150, 25);
+            actualizarButton.setBounds(320, 420, largoBotonPestaña, 25);
             actualizarButton.setBackground(Colors.principalBotones);
             actualizarButton.setForeground(Colors.white);
             actualizarButton.addActionListener(this);
@@ -801,7 +904,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
             
             JButton eliminarButton = new JButton("Eliminar Doctor");
             eliminarButton.setFont(Fuentes.getPrincipalFontSize(12, true));
-            eliminarButton.setBounds(115, 125, 150, 25);
+            eliminarButton.setBounds(115, 125, largoBotonPestaña, 25);
             eliminarButton.setBackground(Colors.principalBotones);
             eliminarButton.setForeground(Colors.white);
             eliminarButton.addActionListener(this);
@@ -922,7 +1025,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
             JButton crearButton = new JButton("Guardar Paciente");
             crearButton.setName("Holaa");
             crearButton.setFont(Fuentes.getPrincipalFontSize(12, true));
-            crearButton.setBounds(320, 320, 150, 25);
+            crearButton.setBounds(320, 320, largoBotonPestaña, 25);
             crearButton.setBackground(Colors.principalBotones);
             crearButton.setForeground(Colors.white);
             crearButton.addActionListener(this);
@@ -1050,12 +1153,8 @@ public class MainAdministrador extends JFrame implements ActionListener{
             buscarButton.addActionListener(this);
             dialogo.add(buscarButton);
             
-            
-            JSeparator separador2 = new JSeparator();
-            separador.setBounds(0, 140, 1000, 1);
-            dialogo.add(separador);
-            
-            
+           
+   
             
             JLabel nombresLabel = new JLabel("Nombres");
             nombresLabel.setFont(Fuentes.getPrincipalFontSize(12, true));
@@ -1114,7 +1213,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
             
             JButton actualizarButton = new JButton("Editar Paciente");
             actualizarButton.setFont(Fuentes.getPrincipalFontSize(12, true));
-            actualizarButton.setBounds(320, 420, 150, 25);
+            actualizarButton.setBounds(320, 420, largoBotonPestaña, 25);
             actualizarButton.setBackground(Colors.principalBotones);
             actualizarButton.setForeground(Colors.white);
             actualizarButton.addActionListener(this);
@@ -1282,7 +1381,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
             
             JButton eliminarButton = new JButton("Eliminar Paciente");
             eliminarButton.setFont(Fuentes.getPrincipalFontSize(12, true));
-            eliminarButton.setBounds(115, 125, 150, 25);
+            eliminarButton.setBounds(115, 125, largoBotonPestaña, 25);
             eliminarButton.setBackground(Colors.principalBotones);
             eliminarButton.setForeground(Colors.white);
             eliminarButton.addActionListener(this);
@@ -1330,6 +1429,408 @@ public class MainAdministrador extends JFrame implements ActionListener{
         }
         //Fin Acciones Pacientes
 
+        
+        //Inicio Acciones Productos
+        if(e.getActionCommand().equals("Crear producto")){
+            
+            
+            JLabel imageLabel = new JLabel(Toolbox.adjustImage("../imgs/Crear.png", 40, 40));
+            imageLabel.setBounds(10, 10, 40, 40);
+            dialogo.add(imageLabel);
+
+
+            
+            JLabel tituloLabel = new JLabel("Crear Producto");
+            tituloLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
+            tituloLabel.setBounds(60, 5, 300, 50);
+            dialogo.add(tituloLabel);
+            
+            JSeparator separador = new JSeparator();
+            separador.setBounds(0, 60, 1000, 1);
+            dialogo.add(separador);
+            
+            JLabel nombresLabel = new JLabel("Nombres");
+            nombresLabel.setFont(Fuentes.getPrincipalFontSize(12, true));
+            nombresLabel.setBounds(30, 90, 100, 30);
+            dialogo.add(nombresLabel);
+
+            nombreField = new JTextField();
+            nombreField.setBounds(110,90,200,30);
+            dialogo.add(nombreField);
+            
+            JLabel precioLabel = new JLabel("Precio");
+            precioLabel.setFont(Fuentes.getPrincipalFontSize(12, true));
+            precioLabel.setBounds(435, 90, 100, 30);
+            dialogo.add(precioLabel);
+
+            PrecioField = new JTextField();
+            PrecioField.setBounds(500,90,200,30);
+            dialogo.add(PrecioField);
+            
+            JLabel descripcionLabel = new JLabel("Descripcion");
+            descripcionLabel.setFont(Fuentes.getPrincipalFontSize(12, true));
+            descripcionLabel.setBounds(10, 140, 100, 30);
+            dialogo.add(descripcionLabel);
+
+            DescripcionField = new JTextField();
+            DescripcionField.setBounds(110,140,200,30);
+            dialogo.add(DescripcionField);
+            
+            JLabel cantidadLabel = new JLabel("Cantidad");
+            cantidadLabel.setFont(Fuentes.getPrincipalFontSize(12, true));
+            cantidadLabel.setBounds(420, 140, 100, 30);
+            dialogo.add(cantidadLabel);
+
+            CantidadField = new JTextField();
+            CantidadField.setBounds(500,140,200,30);
+            dialogo.add(CantidadField);
+            
+            
+            JButton crearButton = new JButton("Guardar Producto");
+            crearButton.setFont(Fuentes.getPrincipalFontSize(12, true));
+            crearButton.setBounds(320, 320, largoBotonPestaña, 25);
+            crearButton.setBackground(Colors.principalBotones);
+            crearButton.setForeground(Colors.white);
+            crearButton.addActionListener(this);
+            dialogo.add(crearButton);
+            
+            JLabel logoLabel = new JLabel(Toolbox.adjustImage("../imgs/LogoCompleto.png", 110, 30));
+            logoLabel.setBounds(650, 320, 110, 30);
+            dialogo.add(logoLabel);
+            
+            dialogo.setTitle("Crear Producto");
+            dialogo.setSize(800,400);
+            dialogo.setLayout(null);
+            dialogo.setResizable(false);
+            dialogo.setLocationRelativeTo(null);
+            dialogo.getContentPane().setBackground(Colors.background);
+            dialogo.setVisible(true);
+            
+            
+        }
+        
+        if(e.getActionCommand().equals("Guardar Producto")){
+            String nombre = nombreField.getText();
+            String descripcion = DescripcionField.getText();
+            String precio = PrecioField.getText();
+            String cantidad = CantidadField.getText();
+             
+            boolean fallaPrecio = false;
+            try {
+                Integer.parseInt(precio);
+            } catch (NumberFormatException NFE) {
+                fallaPrecio = true;
+            }
+            
+            boolean fallaCantidad = false;
+            try {
+                Integer.parseInt(cantidad);
+            } catch (NumberFormatException NFE) {
+                fallaCantidad = true;
+            }
+            
+            
+
+            if (!nombre.equals("") && !descripcion.equals("")) {
+                if (!fallaCantidad) {
+                    if (!fallaPrecio) {
+                        Producto prod = new Producto(nombre,Integer.parseInt(precio), descripcion, Integer.parseInt(cantidad));
+                        ListaProductos.addProducto(prod);
+                        MainAdministrador mainAdmin = new MainAdministrador();
+                        this.setVisible(false);
+                        this.dispose();
+                    } else {
+                        Mensaje mensaje = new Mensaje("Ingrese un precio correcto", false);
+                    }
+
+                } else {
+                    Mensaje mensaje = new Mensaje("Ingrese una cantidad correcta.", false);
+                }
+
+            } else {
+                Mensaje mensaje = new Mensaje("Ingrese todos los campos  obligatorios.", false);
+            }
+            
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        if(e.getActionCommand().equals("Actualizar producto")){
+                        
+            
+            JLabel imageLabel = new JLabel(Toolbox.adjustImage("../imgs/Crear.png", 40, 40));
+            imageLabel.setBounds(10, 10, 40, 40);
+            dialogo.add(imageLabel);
+
+
+            
+            JLabel tituloLabel = new JLabel("Actualizar Producto");
+            tituloLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
+            tituloLabel.setBounds(60, 5, 200, 50);
+            dialogo.add(tituloLabel);
+            
+            JSeparator separador = new JSeparator();
+            separador.setBounds(0, 60, 1000, 1);
+            dialogo.add(separador);
+            
+            
+            
+            JLabel codigosLabel = new JLabel("Codigo");
+            codigosLabel.setFont(Fuentes.getPrincipalFontSize(12, true));
+            codigosLabel.setBounds(30, 90, 100, 30);
+            dialogo.add(codigosLabel);
+
+            codigoField = new JTextField();
+            codigoField.setBounds(110,90,200,30);
+            dialogo.add(codigoField);
+            
+            JButton buscarButton = new JButton("Buscar Producto");
+            buscarButton.setFont(Fuentes.getPrincipalFontSize(12, true));
+            buscarButton.setBounds(500, 90, 150, 30);
+            buscarButton.setBackground(Colors.principalBotones);
+            buscarButton.setForeground(Colors.white);
+            buscarButton.addActionListener(this);
+            dialogo.add(buscarButton);
+            
+            
+
+            
+            
+            
+            JLabel nombresLabel = new JLabel("Nombres");
+            nombresLabel.setFont(Fuentes.getPrincipalFontSize(12, true));
+            nombresLabel.setBounds(30, 170, 100, 30);
+            dialogo.add(nombresLabel);
+
+            nombreField = new JTextField();
+            nombreField.setBounds(110,170,200,30);
+            nombreField.setEditable(false);
+            dialogo.add(nombreField);
+            
+            JLabel precioLabel = new JLabel("Precio");
+            precioLabel.setFont(Fuentes.getPrincipalFontSize(12, true));
+            precioLabel.setBounds(415, 170, 100, 30);
+            dialogo.add(precioLabel);
+
+            PrecioField = new JTextField();
+            PrecioField.setBounds(500,170,200,30);
+            PrecioField.setEditable(false);
+            dialogo.add(PrecioField);
+            
+            JLabel DescripcionLabel = new JLabel("Descripcion");
+            DescripcionLabel.setFont(Fuentes.getPrincipalFontSize(12, true));
+            DescripcionLabel.setBounds(10, 220, 100, 30);
+            dialogo.add(DescripcionLabel);
+
+            DescripcionField = new JTextField();
+            DescripcionField.setBounds(110,220,200,30);
+            DescripcionField.setEditable(false);
+            dialogo.add(DescripcionField);
+            
+            JLabel cantidadLabel = new JLabel("Cantidad");
+            cantidadLabel.setFont(Fuentes.getPrincipalFontSize(12, true));
+            cantidadLabel.setBounds(420, 220, 100, 30);
+            dialogo.add(cantidadLabel);
+
+            CantidadField = new JTextField();
+            CantidadField.setBounds(500,220,200,30);
+            CantidadField.setEditable(false);
+            dialogo.add(CantidadField);
+            
+            
+            
+            JButton actualizarButton = new JButton("Editar Producto");
+            actualizarButton.setFont(Fuentes.getPrincipalFontSize(12, true));
+            actualizarButton.setBounds(320, 420, largoBotonPestaña, 25);
+            actualizarButton.setBackground(Colors.principalBotones);
+            actualizarButton.setForeground(Colors.white);
+            actualizarButton.addActionListener(this);
+            dialogo.add(actualizarButton);
+            
+            JLabel logoLabel = new JLabel(Toolbox.adjustImage("../imgs/LogoCompleto.png", 110, 30));
+            logoLabel.setBounds(650, 420, 110, 30);
+            dialogo.add(logoLabel);
+            
+            
+            
+            
+            dialogo.setTitle("Actualizar Producto");
+            dialogo.setSize(800,500);
+            dialogo.setLayout(null);
+            dialogo.setResizable(false);
+            dialogo.setLocationRelativeTo(null);
+            dialogo.getContentPane().setBackground(Colors.background);
+            dialogo.setVisible(true);
+            
+           
+        }
+        
+        if(e.getActionCommand().equals("Buscar Producto")){
+            int codigo;
+            boolean error =false;
+            Producto prodc;
+            try {
+                codigo = Integer.parseInt(codigoField.getText());
+            } catch (NumberFormatException NFE) {
+                error = true;
+                codigo=0;
+            }
+            if(!error){
+                prodc =ListaProductos.getProducto(codigo);
+                if(prodc != null){
+                    nombreField.setText(prodc.getNombre());
+                    DescripcionField.setText(prodc.getDescripcion());
+                    CantidadField.setText(Integer.toString(prodc.getCantidad()));
+                    PrecioField.setText(Integer.toString(prodc.getPrecio()));
+
+                    nombreField.setEditable(true);
+                    DescripcionField.setEditable(true);
+                    CantidadField.setEditable(true);
+                    PrecioField.setEditable(true);    
+                    
+                }else{
+                    Mensaje mensaje = new Mensaje("El producto ingresado no existe",false);
+
+                }
+            }else{
+                Mensaje mensaje = new Mensaje("Ingrese un codigo correcto.",false);
+            }
+            
+        }
+        
+        if(e.getActionCommand().equals("Editar Producto")){
+            
+            int codigo;
+            boolean error =false;
+            try {
+                codigo = Integer.parseInt(codigoField.getText());
+            } catch (NumberFormatException NFE) {
+                error = true;
+                codigo=0;
+            }
+            
+            
+            String nombre = nombreField.getText();
+            String descripcion = DescripcionField.getText();
+            String precio = PrecioField.getText();
+            String cantidad = CantidadField.getText();
+
+
+            boolean fallaPrecio = false;
+            try {
+                Integer.parseInt(precio);
+            } catch (NumberFormatException NFE) {
+                fallaPrecio = true;
+            }
+            boolean fallaCantidad = false;
+            try {
+                Integer.parseInt(cantidad);
+            } catch (NumberFormatException NFE) {
+                fallaCantidad = true;
+            }
+            
+            
+
+            if (!nombre.equals("") && !descripcion.equals("")) {
+
+                    if (!fallaCantidad) {
+                        if(!fallaPrecio){
+                            if(!error){
+                                Producto productoNuevo = new Producto(nombre, Integer.parseInt(precio), descripcion, Integer.parseInt(cantidad));
+                                productoNuevo.setId(codigo);
+                                ListaProductos.editProducto(productoNuevo, codigo);
+                                MainAdministrador mainAdmin = new MainAdministrador();
+                                this.setVisible(false);
+                                this.dispose();
+                            }else{
+                                Mensaje mensaje = new Mensaje("Ingrese un codigo correcto.",false);
+                            }
+                        }else{
+                            Mensaje mensaje = new Mensaje("Ingrese un precio correcto.",false);
+                        }
+
+                    } else {
+                        Mensaje mensaje = new Mensaje("Ingrese una cantidad correcta.", false);
+                    }
+
+                
+
+
+            } else {
+                Mensaje mensaje = new Mensaje("Ingrese todos los campos  obligatorios.", false);
+            }
+            
+        }
+        
+        
+        
+        
+        if(e.getActionCommand().equals("Eliminar producto")){
+            JLabel iconoLabel = new JLabel(Toolbox.adjustImage("../imgs/eliminar.png", 30, 30));
+            iconoLabel.setBounds(10, 10, 30, 30);
+            dialogo.add(iconoLabel);
+            
+            JLabel eliminarLabel = new JLabel("<html>Ingrese el codigo del Producto a eliminar</html>");
+            eliminarLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
+            eliminarLabel.setBounds(50, 10, 300, 30);
+            dialogo.add(eliminarLabel);
+            
+            codigoField = new JTextField();
+            codigoField.setBounds(60, 60, 260, 30);
+            dialogo.add(codigoField);
+            
+            JButton eliminarButton = new JButton("Eliminar Producto");
+            eliminarButton.setFont(Fuentes.getPrincipalFontSize(12, true));
+            eliminarButton.setBounds(115, 125, largoBotonPestaña, 25);
+            eliminarButton.setBackground(Colors.principalBotones);
+            eliminarButton.setForeground(Colors.white);
+            eliminarButton.addActionListener(this);
+            dialogo.add(eliminarButton);
+            
+            JLabel logoLabel = new JLabel(Toolbox.adjustImage("../imgs/LogoCompleto.png", 110, 30));
+            logoLabel.setBounds(265, 175, 110, 30);
+            dialogo.add(logoLabel);
+            
+            dialogo.setTitle("Eliminar Producto");
+            dialogo.setSize(400,250);
+            dialogo.setLayout(null);
+            dialogo.setResizable(false);
+            dialogo.setLocationRelativeTo(null);
+            dialogo.getContentPane().setBackground(Colors.background);
+            dialogo.setVisible(true);
+        }
+        
+        if(e.getActionCommand().equals("Eliminar Producto")){
+            int codigo;
+            boolean error =false;
+            try {
+                codigo = Integer.parseInt(codigoField.getText());
+            } catch (NumberFormatException NFE) {
+                error = true;
+                codigo=0;
+            }
+            if(!error){
+                if(ListaProductos.getProducto(codigo) != null){
+
+                    ListaProductos.eliminarProducto(codigo);
+                    MainAdministrador mainAdmin = new MainAdministrador();
+                    this.setVisible(false);
+                    this.dispose();
+
+                }else{
+                    Mensaje mensaje = new Mensaje("El producto no existe.",false);
+                }
+
+            }else{
+                Mensaje mensaje = new Mensaje("Ingrese un codigo correcto.",false);
+            }
+        }
+        //Fin Acciones Productos
     }
     
     

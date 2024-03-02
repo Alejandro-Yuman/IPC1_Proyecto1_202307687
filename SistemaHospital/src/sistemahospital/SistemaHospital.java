@@ -4,9 +4,11 @@
  */
 package sistemahospital;
 
+import conta_usuarios.ListaProductos;
 import conta_usuarios.ListaUsuarios;
 import objetos.Administrador;
 import objetos.Medico;
+import objetos.Producto;
 import utils.Autenticacion;
 import vistas.Login;
 import vistas.MainAdministrador;
@@ -34,6 +36,8 @@ public class SistemaHospital {
         Medico med2 = new Medico("Medico 2","Doña",22,'F',"Diosayudame","Doctora psiquiatra");
         ListaUsuarios.addUsuarios(med2);
         
+        Producto producto = new Producto("Cerveza",10,"Hola gru",6);
+        ListaProductos.addProducto(producto);
         
         
         ListaUsuarios.getUsuarios();
