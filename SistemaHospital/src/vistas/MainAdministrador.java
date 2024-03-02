@@ -100,7 +100,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
         //---------------------------------------Pestaña Doctores
         JPanel panelDoctores = new JPanel();
         panelDoctores.setLayout(null);
-        panelDoctores.setBackground(Colors.white);
+        panelDoctores.setBackground(Colors.background);
         tabbedPane.addTab("Doctores", panelDoctores);
         tabbedPane.setFont(Fuentes.getPrincipalFontSize(12, true));
         
@@ -212,7 +212,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
         //---------------------------------------Pestaña Pacientes
         JPanel panelPacientes = new JPanel();
         panelPacientes.setLayout(null);
-        panelPacientes.setBackground(Colors.white);
+        panelPacientes.setBackground(Colors.background);
         tabbedPane.addTab("Pacientes", panelPacientes);
         
         JLabel tituloPacientesLabel = new JLabel("Listado de Pacientes");
@@ -284,7 +284,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
         //---------------------------------------Pestaña Productos
         JPanel panelProductos = new JPanel();
         panelProductos.setLayout(null);
-        panelProductos.setBackground(Colors.white);
+        panelProductos.setBackground(Colors.background);
         tabbedPane.addTab("Productos", panelProductos);
         
 
@@ -395,7 +395,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
         
         
         
-        this.getContentPane().setBackground(Colors.background);
+        this.getContentPane().setBackground(Colors.backgroundSecundario);
         this.setTitle("Menu Principal");
         this.setSize(1200,700);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -609,7 +609,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
         if(e.getActionCommand().equals("Actualizar doctor")){
                         
             
-            JLabel imageLabel = new JLabel(Toolbox.adjustImage("../imgs/Crear.png", 40, 40));
+            JLabel imageLabel = new JLabel(Toolbox.adjustImage("../imgs/Editar.png", 40, 40));
             imageLabel.setBounds(10, 10, 40, 40);
             dialogo.add(imageLabel);
 
@@ -1122,7 +1122,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
         if(e.getActionCommand().equals("Actualizar paciente")){
                         
             
-            JLabel imageLabel = new JLabel(Toolbox.adjustImage("../imgs/Crear.png", 40, 40));
+            JLabel imageLabel = new JLabel(Toolbox.adjustImage("../imgs/Editar.png", 40, 40));
             imageLabel.setBounds(10, 10, 40, 40);
             dialogo.add(imageLabel);
 
@@ -1569,7 +1569,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
         if(e.getActionCommand().equals("Actualizar producto")){
                         
             
-            JLabel imageLabel = new JLabel(Toolbox.adjustImage("../imgs/Crear.png", 40, 40));
+            JLabel imageLabel = new JLabel(Toolbox.adjustImage("../imgs/Editar.png", 40, 40));
             imageLabel.setBounds(10, 10, 40, 40);
             dialogo.add(imageLabel);
 

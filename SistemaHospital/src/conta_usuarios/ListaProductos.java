@@ -14,7 +14,11 @@ import objetos.Producto;
 public class ListaProductos {
     static ArrayList<Producto> productos = new ArrayList<Producto>();
     
-    
+    public static void printProductos() {
+        for (int i = 0; i < productos.size(); i++) {
+            System.out.println("nombre " + productos.get(i).getNombre()+ " id="+productos.get(i).getId());
+        }
+    }
     public static Producto getProducto(int id){
         
         for (int i = 0; i < productos.size(); i++) {
@@ -56,18 +60,20 @@ public class ListaProductos {
     
     
     static int generarId(Producto usuarioNuevo){
-        for (int i = 1; i < productos.size(); i++) {
-            if(productos.get(i).getId() != (i)){
+        for (int i = 0; i < productos.size(); i++) {
+            if(productos.get(i).getId() != (i+1)){
+                System.out.println(i);
                 return i;
             }
         }
         if(productos.isEmpty()){
             return 1;
         }else{
+
             return productos.getLast().getId()+1;
             
         }
         
-
+        
     }
 }

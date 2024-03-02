@@ -107,7 +107,7 @@ public class MainPaciente extends JFrame implements ActionListener{
         //---------------------------------------Pestaña Solicitar Cita
         JPanel panelSolicitar = new JPanel();
         panelSolicitar.setLayout(null);
-        panelSolicitar.setBackground(Colors.white);
+        panelSolicitar.setBackground(Colors.background);
         tabbedPane.addTab("Solicitar Cita", panelSolicitar);
         tabbedPane.setFont(Fuentes.getPrincipalFontSize(12, true));
         
@@ -121,9 +121,10 @@ public class MainPaciente extends JFrame implements ActionListener{
         motivoLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
         panelSolicitar.add(motivoLabel);
         
-        motivoTextArea = new JTextArea("Esciba aquí", 5, 15);
+        motivoTextArea = new JTextArea(5, 15);
         motivoTextArea.setBorder(BorderFactory.createLineBorder(Colors.principalBotones));
         motivoTextArea.setBounds(10, 90, 1120, 150);
+        motivoTextArea.setLineWrap(true);
         panelSolicitar.add(motivoTextArea);
         
         
@@ -247,7 +248,7 @@ public class MainPaciente extends JFrame implements ActionListener{
         //---------------------------------------Pestaña Ver Estado Cita
         JPanel panelEstado = new JPanel();
         panelEstado.setLayout(null);
-        panelEstado.setBackground(Colors.white);
+        panelEstado.setBackground(Colors.background);
         tabbedPane.addTab("Ver Estado Cita", panelEstado);
         
         JLabel tituloEstadoLabel = new JLabel("Estado de Cita");
@@ -262,7 +263,7 @@ public class MainPaciente extends JFrame implements ActionListener{
         //---------------------------------------Pestaña Farmacia
         JPanel panelFarmacia = new JPanel();
         panelFarmacia.setLayout(null);
-        panelFarmacia.setBackground(Colors.white);
+        panelFarmacia.setBackground(Colors.background);
         tabbedPane.addTab("Farmacia", panelFarmacia);
         
         
@@ -311,7 +312,7 @@ public class MainPaciente extends JFrame implements ActionListener{
         this.add(tabbedPane);
         
         
-        this.getContentPane().setBackground(Colors.background);
+        this.getContentPane().setBackground(Colors.backgroundSecundario);
         this.setTitle("Menu Principal");
         this.setSize(1200,700);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -368,7 +369,7 @@ public class MainPaciente extends JFrame implements ActionListener{
     
         if(e.getActionCommand().equals("Editar Perfil")){
                        
-            JLabel imageLabel = new JLabel(Toolbox.adjustImage("../imgs/Crear.png", 40, 40));
+            JLabel imageLabel = new JLabel(Toolbox.adjustImage("../imgs/Editar.png", 40, 40));
             imageLabel.setBounds(10, 10, 40, 40);
             dialogo.add(imageLabel);
 

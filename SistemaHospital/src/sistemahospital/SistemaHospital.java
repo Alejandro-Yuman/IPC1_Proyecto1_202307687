@@ -51,8 +51,8 @@ public class SistemaHospital {
         
 
         
-        
-        ListaUsuarios.getUsuarios();
+        ListaProductos.printProductos();
+        ListaUsuarios.printUsuarios();
 
         //MainAdministrador login = new MainAdministrador();
         Login login = new Login();

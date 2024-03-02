@@ -13,7 +13,7 @@ import objetos.Paciente;
 public  class ListaUsuarios {
     static ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
 
-    public static void getUsuarios() {
+    public static void printUsuarios() {
         for (int i = 0; i < usuarios.size(); i++) {
             System.out.println("Usuario " + usuarios.get(i).getNombre()+ " id = "+usuarios.get(i).getId() +"Contra ="+ usuarios.get(i).getContraseña());
         }

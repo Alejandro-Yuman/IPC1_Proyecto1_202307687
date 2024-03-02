@@ -14,5 +14,7 @@ public class Colors {
     public static Color principalBotones = new Color(70, 82, 105);
     
     public static Color background = new Color(234, 241, 247);
-    public static Color backggroundSecundario = new Color(211, 74, 0);
+
+    //public static Color backgroundSecundario = new Color(241, 247, 252);
+    public static Color backgroundSecundario = new Color(247, 251, 255);
 }
