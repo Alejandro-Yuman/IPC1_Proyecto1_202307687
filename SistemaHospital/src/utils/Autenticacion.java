@@ -40,5 +40,12 @@ public class Autenticacion {
         }
     }
     
+    public static void actualizarUsuario(int id){
+        Usuario tempUs = ListaUsuarios.getUsuario(id);
+        if(tempUs != null){
+            SesionActual.asignarSesion(tempUs);
+        }
+    }
+    
     
 }

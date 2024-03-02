@@ -9,7 +9,7 @@ import java.awt.Color;
  */
 public class Colors {
     public static Color white = new Color(255, 255, 255);
-    
+    public static Color black = new Color(255, 255, 255);
     
     public static Color principalBotones = new Color(70, 82, 105);
     

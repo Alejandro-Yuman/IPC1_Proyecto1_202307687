@@ -15,7 +15,7 @@ public  class ListaUsuarios {
 
     public static void getUsuarios() {
         for (int i = 0; i < usuarios.size(); i++) {
-            System.out.println("Usuario " + usuarios.get(i).getNombre()+ " id = "+usuarios.get(i).getId());
+            System.out.println("Usuario " + usuarios.get(i).getNombre()+ " id = "+usuarios.get(i).getId() +"Contra ="+ usuarios.get(i).getContraseña());
         }
     }
     

@@ -39,6 +39,8 @@ import utils.Fuentes;
  */
 public class MainAdministrador extends JFrame implements ActionListener{
 
+    JTabbedPane tabbedPane;
+    
     JTextField codigoField;
     JTextField nombreField;
     JTextField ApellidoField;
@@ -93,8 +95,8 @@ public class MainAdministrador extends JFrame implements ActionListener{
         this.add(tituloLabel);
 
         
-        JTabbedPane tabbedPane = new JTabbedPane();
-        
+        //JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane = new JTabbedPane();
         //---------------------------------------Pestaña Doctores
         JPanel panelDoctores = new JPanel();
         panelDoctores.setLayout(null);
@@ -966,7 +968,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
             
             JLabel tituloLabel = new JLabel("Crear Paciente");
             tituloLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
-            tituloLabel.setBounds(60, 5, 100, 50);
+            tituloLabel.setBounds(60, 5, 300, 50);
             dialogo.add(tituloLabel);
             
             JSeparator separador = new JSeparator();
@@ -1036,7 +1038,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
             logoLabel.setBounds(650, 320, 110, 30);
             dialogo.add(logoLabel);
             
-            dialogo.setTitle("Crear Doctor");
+            dialogo.setTitle("Crear Paciente");
             dialogo.setSize(800,400);
             dialogo.setLayout(null);
             dialogo.setResizable(false);
@@ -1089,6 +1091,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
                         Paciente pac = new Paciente(nombre, apellidos, edad, genero, password);
                         ListaUsuarios.addUsuarios(pac);
                         MainAdministrador mainAdmin = new MainAdministrador();
+                        mainAdmin.tabbedPane.setSelectedIndex(1);
                         this.setVisible(false);
                         this.dispose();
 
@@ -1125,7 +1128,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
 
 
             
-            JLabel tituloLabel = new JLabel("Actualizar Doctor");
+            JLabel tituloLabel = new JLabel("Actualizar Paciente");
             tituloLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
             tituloLabel.setBounds(60, 5, 200, 50);
             dialogo.add(tituloLabel);
@@ -1226,7 +1229,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
             
             
             
-            dialogo.setTitle("Actualizar Doctor");
+            dialogo.setTitle("Actualizar Paciente");
             dialogo.setSize(800,500);
             dialogo.setLayout(null);
             dialogo.setResizable(false);
@@ -1340,6 +1343,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
                                 pacienteNuevo.setId(codigo);
                                 ListaUsuarios.editUsuario(pacienteNuevo, codigo);
                                 MainAdministrador mainAdmin = new MainAdministrador();
+                                mainAdmin.tabbedPane.setSelectedIndex(1);
                                 this.setVisible(false);
                                 this.dispose();
                             }else{
@@ -1391,7 +1395,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
             logoLabel.setBounds(265, 175, 110, 30);
             dialogo.add(logoLabel);
             
-            dialogo.setTitle("Eliminar Doctor");
+            dialogo.setTitle("Eliminar Paciente");
             dialogo.setSize(400,250);
             dialogo.setLayout(null);
             dialogo.setResizable(false);
@@ -1414,6 +1418,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
                     if(ListaUsuarios.getUsuario(codigo) instanceof Paciente){
                         ListaUsuarios.eliminarUsuario(codigo);
                         MainAdministrador mainAdmin = new MainAdministrador();
+                        mainAdmin.tabbedPane.setSelectedIndex(1);
                         this.setVisible(false);
                         this.dispose();
                     }else{
@@ -1537,6 +1542,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
                         Producto prod = new Producto(nombre,Integer.parseInt(precio), descripcion, Integer.parseInt(cantidad));
                         ListaProductos.addProducto(prod);
                         MainAdministrador mainAdmin = new MainAdministrador();
+                                            mainAdmin.tabbedPane.setSelectedIndex(2);
                         this.setVisible(false);
                         this.dispose();
                     } else {
@@ -1745,6 +1751,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
                                 productoNuevo.setId(codigo);
                                 ListaProductos.editProducto(productoNuevo, codigo);
                                 MainAdministrador mainAdmin = new MainAdministrador();
+                                mainAdmin.tabbedPane.setSelectedIndex(2);
                                 this.setVisible(false);
                                 this.dispose();
                             }else{
@@ -1819,6 +1826,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
 
                     ListaProductos.eliminarProducto(codigo);
                     MainAdministrador mainAdmin = new MainAdministrador();
+                    mainAdmin.tabbedPane.setSelectedIndex(2);
                     this.setVisible(false);
                     this.dispose();
 

@@ -6,12 +6,16 @@ package sistemahospital;
 
 import conta_usuarios.ListaProductos;
 import conta_usuarios.ListaUsuarios;
+import javax.swing.UIManager;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import objetos.Administrador;
 import objetos.Medico;
 import objetos.Producto;
 import utils.Autenticacion;
 import vistas.Login;
 import vistas.MainAdministrador;
+import vistas.MainPaciente;
 import vistas.Mensaje;
 import vistas.Register;
 
@@ -35,17 +39,27 @@ public class SistemaHospital {
         ListaUsuarios.addUsuarios(med);
         Medico med2 = new Medico("Medico 2","Doña",22,'F',"Diosayudame","Doctora psiquiatra");
         ListaUsuarios.addUsuarios(med2);
+        Medico med3 = new Medico("Medico 3","Donsito",22,'F',"Diosayudame","Doctor psiquiatra");
+        ListaUsuarios.addUsuarios(med3);
+        Medico med4 = new Medico("Medico 4","Donsito",22,'F',"Diosayudame","Computadora");
+        ListaUsuarios.addUsuarios(med4);
         
-        Producto producto = new Producto("Cerveza",10,"Hola gru",6);
-        ListaProductos.addProducto(producto);
+        for (int i = 0; i < 10; i++) {
+            Producto producto = new Producto("Cerveza",i,"Hola gru",6);
+            ListaProductos.addProducto(producto);
+        }
+        
+
         
         
         ListaUsuarios.getUsuarios();
-        
-        
-        MainAdministrador login = new MainAdministrador();
-        //Login login = new Login();
+
+        //MainAdministrador login = new MainAdministrador();
+        Login login = new Login();
         //Register login = new Register();
+        //MainPaciente login = new MainPaciente();
+
+
 
     }
     
