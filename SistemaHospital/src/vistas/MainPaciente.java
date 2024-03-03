@@ -4,6 +4,7 @@
  */
 package vistas;
 
+import conta_usuarios.ListaHorarios;
 import conta_usuarios.ListaProductos;
 import conta_usuarios.ListaUsuarios;
 import conta_usuarios.SesionActual;
@@ -33,6 +34,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
+import objetos.Horario;
 import objetos.Medico;
 import objetos.Paciente;
 import objetos.Producto;
@@ -52,7 +54,7 @@ public class MainPaciente extends JFrame implements ActionListener{
     JComboBox especialidadComboBox;
     JComboBox doctorComboBox;
     JComboBox fechaComboBox;
-    JComboBox horaComboBox;
+    //JComboBox horaComboBox;
     JButton buscarHorarioButton;
     
     JTextField nombreField;
@@ -60,7 +62,8 @@ public class MainPaciente extends JFrame implements ActionListener{
     JPasswordField passwordField;
     JTextField edadField;
     
-    
+    int[] MedicosId;
+    int[] HorariosId;
     
     public MainPaciente() {
         JLabel logoLabel = new JLabel(Toolbox.adjustImage("../imgs/LogoCompleto.png", 110, 30));
@@ -203,6 +206,7 @@ public class MainPaciente extends JFrame implements ActionListener{
         panelSolicitar.add(buscarHorarioButton);
         
         
+        
         JLabel horarioLabel = new JLabel("Horario de citas disponibles");
         horarioLabel.setBounds(10,290,300,30);
         horarioLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
@@ -217,10 +221,11 @@ public class MainPaciente extends JFrame implements ActionListener{
         String[] listaFecha = {"Seleccione una opción", "Hombre", "Mujer"};
         fechaComboBox = new JComboBox(listaFecha);
         fechaComboBox.setBounds(120, 330, 200, 30);
+        fechaComboBox.setEnabled(false);
         fechaComboBox.setFont(Fuentes.getPrincipalFontSize(12, true));
         panelSolicitar.add(fechaComboBox);
         
-        JLabel horaLabel = new JLabel("Hora:");
+        /*JLabel horaLabel = new JLabel("Hora:");
         horaLabel.setBounds(650,330,200,30);
         horaLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
         panelSolicitar.add(horaLabel);
@@ -228,8 +233,9 @@ public class MainPaciente extends JFrame implements ActionListener{
         String[] listaHora = {"Seleccione una opción", "Hombre", "Mujer"};
         horaComboBox = new JComboBox(listaHora);
         horaComboBox.setBounds(720, 330, 200, 30);
+        horaComboBox.setEnabled(false);
         horaComboBox.setFont(Fuentes.getPrincipalFontSize(12, true));
-        panelSolicitar.add(horaComboBox);
+        panelSolicitar.add(horaComboBox);*/
         
         
         JButton botonCrearCita = new JButton("Generar Cita");
@@ -251,10 +257,57 @@ public class MainPaciente extends JFrame implements ActionListener{
         panelEstado.setBackground(Colors.background);
         tabbedPane.addTab("Ver Estado Cita", panelEstado);
         
-        JLabel tituloEstadoLabel = new JLabel("Estado de Cita");
+        JLabel tituloEstadoLabel = new JLabel("Estados de tus Citas");
         tituloEstadoLabel.setBounds(10,10,200,30);
         tituloEstadoLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
         panelEstado.add(tituloEstadoLabel);
+        
+        
+        //Tabla de Medicos
+        ArrayList<Horario> listaHorarios = ListaHorarios.getHorarios();
+        int contadorHorariosPersonales = 0;
+        for (int i = 0; i < listaHorarios.size(); i++) {
+            if(listaHorarios.get(i).getId_Paciente() == SesionActual.getId()){
+                contadorHorariosPersonales++;
+            }
+        }
+        Object[][] datosHorario = new Object[contadorHorariosPersonales][5];
+        
+
+        contadorHorariosPersonales = 0;
+        for (int i = 0; i < listaHorarios.size(); i++) {
+            if(listaHorarios.get(i).getId_Paciente() == SesionActual.getId()){
+            
+                
+            datosHorario[contadorHorariosPersonales][0]=listaHorarios.get(i).getId();
+            
+
+            if(ListaUsuarios.getUsuario(listaHorarios.get(i).getId_Medico()) instanceof Medico){
+                datosHorario[contadorHorariosPersonales][1]=ListaUsuarios.getUsuario(listaHorarios.get(i).getId_Medico()).getNombre();
+            }else{
+                datosHorario[contadorHorariosPersonales][1]="Error, el usuario asignado no es Medico";
+            }
+            
+            datosHorario[contadorHorariosPersonales][2]=listaHorarios.get(i).getEstado();
+            datosHorario[contadorHorariosPersonales][3]=listaHorarios.get(i).getDia()+"/"+listaHorarios.get(i).getMes()+"/"+listaHorarios.get(i).getYear();
+            datosHorario[contadorHorariosPersonales][4]=listaHorarios.get(i).getHora()+":"+listaHorarios.get(i).getMinutos();
+            
+            contadorHorariosPersonales++;
+            }
+        }
+
+        String[] columnasHorario = {"Codigo","Medico","Estado","Fecha","Hora"};
+        
+        JTable tablaHorario = new JTable(datosHorario, columnasHorario);
+        tablaHorario.getColumnModel().getColumn(0).setPreferredWidth(1);
+        tablaHorario.setFont(Fuentes.getPrincipalFontSize(11,false));
+        JScrollPane spHorario = new JScrollPane(tablaHorario);
+        spHorario.setBounds(10, 100, 1100, 400);
+        panelEstado.add(spHorario);
+        //Fin tabla
+        
+        
+        
         //---------------------------------------Pestaña Ver Estado Cita
                 
         
@@ -335,11 +388,7 @@ public class MainPaciente extends JFrame implements ActionListener{
         if(e.getActionCommand().equals("Pastel")){
             
         }
-        
-        if(e.getActionCommand().equals("Generar Cita")){
-            
-        }
-        
+
         if(e.getActionCommand().equals("Mostrar Doctores")){
             ArrayList<Medico> medicos = ListaUsuarios.getMedicos();
             ArrayList<Medico> medicosFiltrados = new ArrayList();
@@ -351,9 +400,11 @@ public class MainPaciente extends JFrame implements ActionListener{
 
                 }
             }
+            MedicosId = new int[medicosFiltrados.size()];
             String[] listaDoctor = new String[medicosFiltrados.size()];
             for (int i = 0; i < medicosFiltrados.size(); i++) {
-                listaDoctor[i] = medicosFiltrados.get(i).getNombre();
+                listaDoctor[i] =medicosFiltrados.get(i).getNombre();
+                MedicosId[i] = medicosFiltrados.get(i).getId();
             }
             
             DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>( listaDoctor );
@@ -364,9 +415,49 @@ public class MainPaciente extends JFrame implements ActionListener{
         }
     
         if (e.getActionCommand().equals("Mostrar Horarios")) {
+            int idMedicoSeleccionado = MedicosId[doctorComboBox.getSelectedIndex()];
             
+            ArrayList<Horario> listaHorarios = ListaHorarios.getHorarios();
+            ArrayList<Horario> listaHorariosFiltrados = new ArrayList<Horario>();
+            for (int i = 0; i < listaHorarios.size(); i++) {
+                if (listaHorarios.get(i).getId_Medico() == idMedicoSeleccionado && listaHorarios.get(i).getId_Paciente() == -1) {
+                    
+                    listaHorariosFiltrados.add(listaHorarios.get(i));
+                }
+            }
+
+            String[] listaFechasyHoras =  new String[listaHorariosFiltrados.size()];
+            HorariosId = new int[listaHorariosFiltrados.size()];
+            for (int i = 0; i < listaHorariosFiltrados.size(); i++) {
+                listaFechasyHoras[i] =(i+1)+"-"+listaHorariosFiltrados.get(i).getDia()+"/"+listaHorariosFiltrados.get(i).getMes()+"/"+listaHorariosFiltrados.get(i).getYear()+"-"+listaHorariosFiltrados.get(i).getHora()+":"+listaHorariosFiltrados.get(i).getMinutos();
+                HorariosId[i] = listaHorariosFiltrados.get(i).getId();
+                //listaHoras[i] = listaHorariosFiltrados.get(i).getHora()+":"+listaHorariosFiltrados.get(i).getMinutos();
+            }
+            
+            
+            DefaultComboBoxModel<String> modelFechas = new DefaultComboBoxModel<>(listaFechasyHoras);
+            //DefaultComboBoxModel<String> modelHoras = new DefaultComboBoxModel<>(listaHoras);
+            fechaComboBox.setModel(modelFechas);
+            //horaComboBox.setModel(modelHoras);
+            
+            fechaComboBox.setEnabled(true);
+            //horaComboBox.setEnabled(true);
         }
-    
+
+        if(e.getActionCommand().equals("Generar Cita")){
+            int index = fechaComboBox.getSelectedIndex();
+            Horario horario = ListaHorarios.getHorario(HorariosId[index]);
+            System.out.println(horario.getId());
+            if(horario.getId_Paciente() == -1){
+                horario.setId_Paciente(SesionActual.getId());
+                ListaHorarios.editHorario(horario, horario.getId());
+                MainPaciente mainPaciente = new MainPaciente();
+            }else{
+                Mensaje mensaje = new Mensaje("El horario esta ocupado",false);
+            }
+        }
+        
+        
         if(e.getActionCommand().equals("Editar Perfil")){
                        
             JLabel imageLabel = new JLabel(Toolbox.adjustImage("../imgs/Editar.png", 40, 40));

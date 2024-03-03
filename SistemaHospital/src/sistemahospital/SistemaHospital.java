@@ -4,12 +4,14 @@
  */
 package sistemahospital;
 
+import conta_usuarios.ListaHorarios;
 import conta_usuarios.ListaProductos;
 import conta_usuarios.ListaUsuarios;
 import javax.swing.UIManager;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import objetos.Administrador;
+import objetos.Horario;
 import objetos.Medico;
 import objetos.Producto;
 import utils.Autenticacion;
@@ -44,15 +46,24 @@ public class SistemaHospital {
         Medico med4 = new Medico("Medico 4","Donsito",22,'F',"Diosayudame","Computadora");
         ListaUsuarios.addUsuarios(med4);
         
+        
+        
         for (int i = 0; i < 10; i++) {
             Producto producto = new Producto("Cerveza",i,"Hola gru",6);
             ListaProductos.addProducto(producto);
         }
         
+        for (int i = 0; i < 10; i++) {
+            Horario horario = new Horario(4,"Hola Tilin",2024,3,2,20,06);
+            ListaHorarios.addHorario(horario);
+        }
+        Horario horario2 = new Horario(4,2,"Hola Tilin 2",2024,3,2,20,06);
+        ListaHorarios.addHorario(horario2);
 
         
-        ListaProductos.printProductos();
+        //ListaProductos.printProductos();
         ListaUsuarios.printUsuarios();
+        ListaHorarios.printHorarios();
 
         //MainAdministrador login = new MainAdministrador();
         Login login = new Login();
