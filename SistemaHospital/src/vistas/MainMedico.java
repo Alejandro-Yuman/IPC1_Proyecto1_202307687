@@ -31,6 +31,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import objetos.Horario;
 import objetos.Medico;
 import objetos.Producto;
@@ -148,11 +149,11 @@ public class MainMedico extends JFrame implements ActionListener{
 
                 GridBagConstraints gbc = new GridBagConstraints();
                 gbc.gridx = 0;
-                //gbc.gridy = principal.getComponentCount(); //The new JPanel's place in the list
+                //gbc.gridy = principal.getComponentCount(); 
                 gbc.fill = GridBagConstraints.HORIZONTAL;
-                //gbc.anchor = GridBagConstraints.PAGE_START; //I thought this would do it
-                gbc.ipady = 130; //Set the panel's height, the width will get set to that of the container JPanel (which is what I want since I'd like my JFrames to be resizable)
-                gbc.insets = new Insets(2, 0, 2, 0); //Separation between JPanels in the list
+                //gbc.anchor = GridBagConstraints.PAGE_START;
+                gbc.ipady = 130; 
+                gbc.insets = new Insets(2, 0, 2, 0); 
                 gbc.weightx = 1.0;
 
                 /*GridBagConstraints gbc2 = new GridBagConstraints();
@@ -164,11 +165,6 @@ public class MainMedico extends JFrame implements ActionListener{
                 pacienteLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
                 smallPanel.add(pacienteLabel);
                 
-                //Usuario
-                JLabel estadoLabel = new JLabel(horariosFiltrados.get(i).getEstado());
-                estadoLabel.setBounds(20, 100, 200, 30);
-                estadoLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
-                smallPanel.add(estadoLabel);
 
                 //Hora
                 JLabel horaLabel = new JLabel(Integer.toString(horariosFiltrados.get(i).getHora()) + ":" + Integer.toString(horariosFiltrados.get(i).getMinutos()));
@@ -190,7 +186,91 @@ public class MainMedico extends JFrame implements ActionListener{
                 verMasButton.addActionListener(this);
                 verMasButton.addActionListener(new ActionListener() { 
                     public void actionPerformed(ActionEvent e) {
-                        System.out.println("Id ="+contadorPanelesInner);
+                        JDialog dialogo = new JDialog();
+                        
+                         JLabel imageLabel = new JLabel(Toolbox.adjustImage("../imgs/Editar.png", 40, 40));
+                        imageLabel.setBounds(10, 10, 40, 40);
+                        dialogo.add(imageLabel);
+
+                        JLabel tituloLabel = new JLabel("Información de Horario");
+                        tituloLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
+                        tituloLabel.setBounds(60, 5, 300, 50);
+                        dialogo.add(tituloLabel);
+
+                        JSeparator separador = new JSeparator();
+                        separador.setBounds(0, 60, 1000, 1);
+                        dialogo.add(separador);
+
+                        
+                        JLabel usuarioLabel = new JLabel("Nombre Paciente: ");
+                        usuarioLabel.setBounds(20, 80, 200, 30);
+                        usuarioLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
+                        dialogo.add(usuarioLabel);
+                        
+                        JLabel usuarioLabelP = new JLabel(ListaUsuarios.getUsuario(horariosFiltrados.get(iFinal).getId_Paciente()).getNombre());
+                        usuarioLabelP.setBounds(180,80, 200, 30);
+                        usuarioLabelP.setFont(Fuentes.getPrincipalFontSize(14, true));
+                        dialogo.add(usuarioLabelP);
+                        
+                        JLabel horaLabel = new JLabel("Hora: ");
+                        horaLabel.setBounds(20, 120, 200, 30);
+                        horaLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
+                        dialogo.add(horaLabel);
+                        
+                        JLabel horaLabelP = new JLabel(Integer.toString(horariosFiltrados.get(iFinal).getHora()) + ":" + Integer.toString(horariosFiltrados.get(iFinal).getMinutos()));
+                        horaLabelP.setBounds(180,120, 200, 30);
+                        horaLabelP.setFont(Fuentes.getPrincipalFontSize(14, true));
+                        dialogo.add(horaLabelP);
+                        
+                        JLabel fechaLabel = new JLabel("Fecha: ");
+                        fechaLabel.setBounds(20, 160, 200, 30);
+                        fechaLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
+                        dialogo.add(fechaLabel);
+                        
+                        JLabel fechaLabelP = new JLabel(Integer.toString(horariosFiltrados.get(iFinal).getDia()) + "/" + Integer.toString(horariosFiltrados.get(iFinal).getMes()) + "/" + Integer.toString(horariosFiltrados.get(iFinal).getYear()));
+                        fechaLabelP.setBounds(180,160, 200, 30);
+                        fechaLabelP.setFont(Fuentes.getPrincipalFontSize(14, true));
+                        dialogo.add(fechaLabelP);
+                        
+                        JLabel estadoLabel = new JLabel("Estado: ");
+                        estadoLabel.setBounds(20, 200, 200, 30);
+                        estadoLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
+                        dialogo.add(estadoLabel);
+                        
+                        JLabel estadoLabelP = new JLabel(horariosFiltrados.get(iFinal).getEstado());
+                        estadoLabelP.setBounds(180,200, 200, 30);
+                        estadoLabelP.setFont(Fuentes.getPrincipalFontSize(14, true));
+                        dialogo.add(estadoLabelP);
+                        
+                        String mov = horariosFiltrados.get(iFinal).getMotivo();
+                        if(mov.equals("")){
+                            mov = "No Hay Motivo.";
+                        }
+                        
+                        JLabel motivoLabel = new JLabel("Motivo: ");
+                        motivoLabel.setBounds(400, 80, 200, 30);
+                        motivoLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
+                        dialogo.add(motivoLabel);
+                        
+                        JLabel motivoLabelP = new JLabel("<html>"+mov+"</html>");
+                        motivoLabelP.setBounds(400,120, 360, 200);
+                        motivoLabelP.setVerticalAlignment(SwingConstants.TOP);
+                        motivoLabelP.setFont(Fuentes.getPrincipalFontSize(14, true));
+                        dialogo.add(motivoLabelP);
+            
+                        JLabel logoLabel = new JLabel(Toolbox.adjustImage("../imgs/LogoCompleto.png", 110, 30));
+                        logoLabel.setBounds(650, 320, 110, 30);
+                        dialogo.add(logoLabel);
+                        
+                        
+                                    
+                        dialogo.setTitle("Mas Informacion");
+                        dialogo.setSize(800, 400);
+                        dialogo.setLayout(null);
+                        dialogo.setResizable(false);
+                        dialogo.setLocationRelativeTo(null);
+                        dialogo.getContentPane().setBackground(Colors.background);
+                        dialogo.setVisible(true);
                     }
                 });
                 smallPanel.add(verMasButton);
@@ -428,7 +508,6 @@ public class MainMedico extends JFrame implements ActionListener{
             this.dispose();
         }
         
-        if(e.getActionCommand().equals("Ver MAs")){}
     }
     
 }

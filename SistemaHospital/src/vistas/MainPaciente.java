@@ -9,6 +9,9 @@ import conta_usuarios.ListaProductos;
 import conta_usuarios.ListaUsuarios;
 import conta_usuarios.SesionActual;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -33,6 +36,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import objetos.Horario;
 import objetos.Medico;
@@ -331,7 +335,7 @@ public class MainPaciente extends JFrame implements ActionListener{
         
         
         
-        JLabel tituloFarmaciaLabel = new JLabel("Famacias");
+        JLabel tituloFarmaciaLabel = new JLabel("Productos");
         tituloFarmaciaLabel.setBounds(10,10,200,30);
         tituloFarmaciaLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
         panelFarmacia.add(tituloFarmaciaLabel);
@@ -340,29 +344,92 @@ public class MainPaciente extends JFrame implements ActionListener{
         tituloCatalogoLabel.setBounds(10,50,1000,30);
         tituloCatalogoLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
         panelFarmacia.add(tituloCatalogoLabel);
-        
-        //Tabla de Medicos
-        ArrayList<Producto> listaProductos = ListaProductos.getProductos();
 
-        Object[][] datosProducto = new Object[listaProductos.size()][7];
-        for (int i = 0; i < listaProductos.size(); i++) {
-            datosProducto[i][0]=listaProductos.get(i).getId();
-            datosProducto[i][1]=listaProductos.get(i).getNombre();
-            datosProducto[i][2]=listaProductos.get(i).getCantidad();
-            datosProducto[i][3]=listaProductos.get(i).getDescripcion();
-            datosProducto[i][4]=listaProductos.get(i).getPrecio();
+        JLabel tituloCodigoLabel = new JLabel("Codigo");
+        tituloCodigoLabel.setBounds(60,100,200,30);
+        tituloCodigoLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
+        panelFarmacia.add(tituloCodigoLabel);
+        
+        JLabel tituloNombreLabel = new JLabel("Nombre");
+        tituloNombreLabel.setBounds(190,100,200,30);
+        tituloNombreLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
+        panelFarmacia.add(tituloNombreLabel);
+        
+        JLabel tituloCantidadLabel = new JLabel("Cantidad");
+        tituloCantidadLabel.setBounds(430,100,200,30);
+        tituloCantidadLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
+        panelFarmacia.add(tituloCantidadLabel);
+        
+        JLabel tituloDescripcionLabel = new JLabel("Descripcion");
+        tituloDescripcionLabel.setBounds(530,100,200,30);
+        tituloDescripcionLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
+        panelFarmacia.add(tituloDescripcionLabel);
+        
+        JLabel tituloPrecioLabel = new JLabel("Precio");
+        tituloPrecioLabel.setBounds(890,100,200,30);
+        tituloPrecioLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
+        panelFarmacia.add(tituloPrecioLabel);
+        
+        //----------------------------------Inicio Tabla Productos
+        JPanel principal = new JPanel();
+        principal.setLayout(new GridBagLayout());
+        principal.setBackground(Colors.background);
+        
+        ArrayList<Producto> productos = ListaProductos.getProductos();
+       
+        for (int i = 0; i < productos.size(); i++) {
+            JPanel smallPanel = new JPanel();
+            smallPanel.setBackground(Colors.backgroundSecundario);
+            smallPanel.setBorder(BorderFactory.createLineBorder(Colors.principalBotones));
+            smallPanel.setBounds(10, 10, 200, 200);
+            //smallPanel.setLayout(new GridBagLayout());
+            smallPanel.setLayout(null);
+
+            
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridx = 0;
+            //gbc.gridy = principal.getComponentCount(); 
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            //gbc.anchor = GridBagConstraints.PAGE_START;
+            gbc.ipady = 130;
+            gbc.insets = new Insets(2, 0, 2, 0);
+            gbc.weightx = 1.0;
+            
+
+            JLabel codigoProdLabel = new JLabel(Integer.toString(productos.get(i).getId()));
+            codigoProdLabel.setBounds(20, 50, 200, 30);
+            codigoProdLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
+            smallPanel.add(codigoProdLabel);
+
+            JLabel nombreProdLabel = new JLabel("<html>"+productos.get(i).getNombre()+"</html>");
+            nombreProdLabel.setBounds(100, 50, 270, 30);
+            nombreProdLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
+            smallPanel.add(nombreProdLabel);
+
+            JLabel cantidadProdLabel = new JLabel(Integer.toString(productos.get(i).getCantidad()));
+            cantidadProdLabel.setBounds(410, 50, 200, 30);
+            cantidadProdLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
+            smallPanel.add(cantidadProdLabel);
+
+            JLabel descripcionProdLabel = new JLabel("<html>"+productos.get(i).getDescripcion()+"</html>");
+            descripcionProdLabel.setBounds(480, 50, 360, 30);
+            descripcionProdLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
+            smallPanel.add(descripcionProdLabel);
+
+            JLabel precioProdLabel = new JLabel(Integer.toString(productos.get(i).getPrecio()));
+            precioProdLabel.setBounds(850, 50, 200, 30);
+            precioProdLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
+            smallPanel.add(precioProdLabel);
+
+            principal.add(smallPanel, gbc);
             
         }
-
-        String[] columnasProducto = {"Codigo","Nombre","Cantidad","Descripcion","Precio"};
         
-        JTable tablaProductos = new JTable(datosProducto, columnasProducto);
-        tablaProductos.getColumnModel().getColumn(0).setPreferredWidth(1);
-        tablaProductos.setFont(Fuentes.getPrincipalFontSize(11,false));
-        JScrollPane spProductos = new JScrollPane(tablaProductos);
-        spProductos.setBounds(10, 100, 1100, 400);
-        panelFarmacia.add(spProductos);
-        //Fin tabla
+        JScrollPane scrollPane = new JScrollPane(principal);
+        scrollPane.setBorder(null);
+        scrollPane.setBounds(50, 150, 1000, 420);
+        panelFarmacia.add(scrollPane);
+        //----------------------------------Fin Tabla Productos
 
         //---------------------------------------Fin Pestaña Farmacia
         

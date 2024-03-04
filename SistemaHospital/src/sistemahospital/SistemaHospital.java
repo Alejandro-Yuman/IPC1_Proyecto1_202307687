@@ -36,8 +36,8 @@ public class SistemaHospital {
         ListaUsuarios.addAdministrador(administrador);
 
         
-        Autenticacion.registro("Eso tilines 1 Paciente","Ap",18,'M',"Contraseña");
-        Autenticacion.registro("Eso tilines 2 Paciente mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm","Ap",18,'M',"2");
+        Autenticacion.registro("Eso tilines 1 Paciente","Ap",18,'M',"1");
+        Autenticacion.registro("Eso tilines 2 Paciente","Ap",18,'M',"2");
         Medico med = new Medico("Medico 1","Don",18,'M',"3",20202020,"Doctor psiquiatra");
         ListaUsuarios.addUsuarios(med);
         Medico med2 = new Medico("Medico 2","Doña",22,'F',"4","Doctora psiquiatra");
@@ -50,7 +50,7 @@ public class SistemaHospital {
         
         
         for (int i = 0; i < 10; i++) {
-            Producto producto = new Producto("Cerveza",i,"Hola gru",6);
+            Producto producto = new Producto("Cerveza Duff de los sinsons que toma homer dou",1000,"Cerveza Duff de los sinsons que toma homer dou",20);
             ListaProductos.addProducto(producto);
         }
         
