@@ -115,7 +115,7 @@ public class Login extends JFrame implements ActionListener{
                         default:
                             throw new AssertionError();
                     }
-
+                    Mensaje mensaje = new Mensaje("¡Inicio de Sesión Exitoso!", true);
                     this.setVisible(false);
                     this.dispose();
                 } else {

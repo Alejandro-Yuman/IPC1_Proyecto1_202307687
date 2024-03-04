@@ -21,27 +21,30 @@ public class Horario {
     private int dia;
     private int hora;
     private int minutos;
+    private String motivo;
 
-    public Horario( int id_Medico, int id_Paciente, String estado, int year, int mes, int dia, int hora, int minutos) {
+    public Horario( int id_Medico, int id_Paciente, int year, int mes, int dia, int hora, int minutos) {
         this.id_Medico = id_Medico;
         this.id_Paciente = id_Paciente;
-        this.estado = estado;
+        this.estado = "Pendiente";
         this.year = year;
         this.mes = mes;
         this.dia = dia;
         this.hora = hora;
         this.minutos = minutos;
+        this.motivo ="";
     }
-    public Horario( int id_Medico, String estado, int year, int mes, int dia, int hora, int minutos) {
+    public Horario( int id_Medico, int year, int mes, int dia, int hora, int minutos) {
         this.id_Medico = id_Medico;
         this.id_Paciente = -1;
         this.id_Paciente = id_Paciente;
-        this.estado = estado;
+        this.estado = "Sin usuario";
         this.year = year;
         this.mes = mes;
         this.dia = dia;
         this.hora = hora;
         this.minutos = minutos;
+        this.motivo ="";
     }
 
 
@@ -117,6 +120,16 @@ public class Horario {
     public void setMinutos(int minutos) {
         this.minutos = minutos;
     }
+
+    public String getMotivo() {
+        return motivo;
+    }
+
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
+    }
+    
+    
     
     
 

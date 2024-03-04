@@ -20,50 +20,24 @@ import utils.Fuentes;
 public class Mensaje extends JFrame implements ActionListener{
 
     public  Mensaje(String mensajeMostrar, boolean success){
+        JDialog dialogo = new JDialog(this);
+        
         if(!success){
             JLabel imageLabel = new JLabel(Toolbox.adjustImage("../imgs/AlertaIcon.png", 30, 30));
-            imageLabel.setBounds(10, 20, 30, 30);
-            this.add(imageLabel);
+            imageLabel.setBounds(10, 15, 30, 30);
+            dialogo.add(imageLabel);
         }else{
             JLabel imageLabel = new JLabel(Toolbox.adjustImage("../imgs/CorrectoIcon.png", 30, 30));
-            imageLabel.setBounds(10, 20, 30, 30);
-            this.add(imageLabel);
+            imageLabel.setBounds(10, 15, 30, 30);
+            dialogo.add(imageLabel);
         }
-        
-        /*if(mensajeMostrar.length() <= 55){
-            JLabel mensajeLabel = new JLabel(mensajeMostrar);
-            mensajeLabel.setBounds(50, 25, 300, 20);
-            this.add(mensajeLabel);
-        }else{
-            String[] palabras = mensajeMostrar.split("\\s+");
-            String temporal = "";
-            int pos = 25;
-            for (int i = 0; i < palabras.length; i++) {
-                if (temporal.length() <= 50) {
-                    temporal += " " + palabras[i];
-                } else {
-                    JLabel mensajeLabel = new JLabel(temporal);
-                    mensajeLabel.setBounds(50, pos, 300, 20);
-                    this.add(mensajeLabel);
-                    temporal = "";
-                    temporal += palabras[i];
-                    pos +=20;
-                }
-            }
 
-            JLabel mensajeLabel = new JLabel("<html>"+mensajeMostrar+"</html>");
-            mensajeLabel.setBounds(50, 20, 300, 20);
-            this.add(mensajeLabel);
-        }*/
-        
-        
-        
         
         JLabel mensajeLabel = new JLabel("<html>" + mensajeMostrar + "</html>");
         mensajeLabel.setFont(Fuentes.getPrincipalFontSize(12, true));
         mensajeLabel.setVerticalAlignment(SwingConstants.TOP);
         mensajeLabel.setBounds(50, 20, 300, 100);
-        this.add(mensajeLabel);
+        dialogo.add(mensajeLabel);
         
         
 
@@ -73,18 +47,17 @@ public class Mensaje extends JFrame implements ActionListener{
         aceptarButton.setBackground(Colors.principalBotones);
         aceptarButton.setForeground(Colors.white);
         aceptarButton.addActionListener(this);
-        this.add(aceptarButton);
+        dialogo.add(aceptarButton);
         
         
-        this.getContentPane().setBackground(Colors.background);
-        this.setTitle("Alerta");
-        this.setSize(400,200);
-        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLayout(null);
-        this.setResizable(false);
-        
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
+        dialogo.getContentPane().setBackground(Colors.background);
+        dialogo.setTitle("Alerta");
+        dialogo.setSize(400,200);
+        dialogo.setLayout(null);
+        dialogo.setResizable(false);
+        dialogo.setLocationRelativeTo(null);
+        dialogo.setAlwaysOnTop(true);
+        dialogo.setVisible(true);
     }
     
 

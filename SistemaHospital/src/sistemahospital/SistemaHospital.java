@@ -17,6 +17,7 @@ import objetos.Producto;
 import utils.Autenticacion;
 import vistas.Login;
 import vistas.MainAdministrador;
+import vistas.MainMedico;
 import vistas.MainPaciente;
 import vistas.Mensaje;
 import vistas.Register;
@@ -36,10 +37,10 @@ public class SistemaHospital {
 
         
         Autenticacion.registro("Eso tilines 1 Paciente","Ap",18,'M',"Contraseña");
-        Autenticacion.registro("Eso tilines 2 Paciente","Ap",18,'M',"holaTilin");
-        Medico med = new Medico("Medico 1","Don",18,'M',"Dios",20202020,"Doctor psiquiatra");
+        Autenticacion.registro("Eso tilines 2 Paciente mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm","Ap",18,'M',"2");
+        Medico med = new Medico("Medico 1","Don",18,'M',"3",20202020,"Doctor psiquiatra");
         ListaUsuarios.addUsuarios(med);
-        Medico med2 = new Medico("Medico 2","Doña",22,'F',"Diosayudame","Doctora psiquiatra");
+        Medico med2 = new Medico("Medico 2","Doña",22,'F',"4","Doctora psiquiatra");
         ListaUsuarios.addUsuarios(med2);
         Medico med3 = new Medico("Medico 3","Donsito",22,'F',"Diosayudame","Doctor psiquiatra");
         ListaUsuarios.addUsuarios(med3);
@@ -54,10 +55,10 @@ public class SistemaHospital {
         }
         
         for (int i = 0; i < 10; i++) {
-            Horario horario = new Horario(4,"Hola Tilin",2024,3,2,20,06);
+            Horario horario = new Horario(4,2024,3,2,20,06);
             ListaHorarios.addHorario(horario);
         }
-        Horario horario2 = new Horario(4,2,"Hola Tilin 2",2024,3,2,20,06);
+        Horario horario2 = new Horario(4,2,2024,3,2,20,06);
         ListaHorarios.addHorario(horario2);
 
         
@@ -67,9 +68,9 @@ public class SistemaHospital {
 
         //MainAdministrador login = new MainAdministrador();
         Login login = new Login();
-        //Register login = new Register();
-        //MainPaciente login = new MainPaciente();
-
+        //Register register = new Register();
+        //MainPaciente paciente = new MainPaciente();
+        //MainMedico medico = new MainMedico();
 
 
     }

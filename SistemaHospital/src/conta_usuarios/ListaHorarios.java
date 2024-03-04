@@ -77,4 +77,30 @@ public class ListaHorarios {
         
     }
     
+    public static void setPacienteID(int idHorario, int idUsuario){
+        Horario horario = ListaHorarios.getHorario(idHorario);
+        horario.setEstado("Pendiente");
+        horario.setId_Paciente(idUsuario);
+        ListaHorarios.editHorario(horario, idHorario);
+    }
+    
+    public static void terminarCita(int idHorario){
+        Horario horario = ListaHorarios.getHorario(idHorario);
+        horario.setEstado("Completada");
+        ListaHorarios.editHorario(horario, idHorario);
+    }
+    
+    public static void rechazarCita(int idHorario){
+        Horario horario = ListaHorarios.getHorario(idHorario);
+        horario.setEstado("Rechazada");
+        ListaHorarios.editHorario(horario, idHorario);
+    }
+    
+    public static void setMotivoHorario(int idHorario,String motivoAsignar){
+        Horario horario = ListaHorarios.getHorario(idHorario);
+        horario.setMotivo(motivoAsignar);
+        ListaHorarios.editHorario(horario, idHorario);
+    }
+    
+    
 }

@@ -178,6 +178,7 @@ public class Register extends JFrame implements ActionListener{
                         Paciente pac = new Paciente(nombre, apellidos, edad, genero, password);
                         ListaUsuarios.addUsuarios(pac);
                         Login login = new Login();
+                        Mensaje mensaje = new Mensaje("¡Cuenta Creada!", true);
                         this.setVisible(false);
                         this.dispose();
                     } else {

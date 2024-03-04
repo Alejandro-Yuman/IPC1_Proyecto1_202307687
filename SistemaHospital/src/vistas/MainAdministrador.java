@@ -577,6 +577,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
                             Medico pac = new Medico(nombre, apellidos, edad, genero, password, Integer.parseInt(telefono), especialidad);
                             ListaUsuarios.addUsuarios(pac);
                             MainAdministrador mainAdmin = new MainAdministrador();
+                            Mensaje mensaje = new Mensaje("¡Doctor Guardado Exitosamente!", true);
                             this.setVisible(false);
                             this.dispose();
                         }else{
@@ -862,6 +863,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
                                 medicoNuevo.setId(codigo);
                                 ListaUsuarios.editUsuario(medicoNuevo, codigo);
                                 MainAdministrador mainAdmin = new MainAdministrador();
+                                Mensaje mensaje = new Mensaje("¡Doctor Actualizado Exitosamente!", true);
                                 this.setVisible(false);
                                 this.dispose();
                             }else{
@@ -939,6 +941,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
                     if(ListaUsuarios.getUsuario(codigo) instanceof Medico){
                         ListaUsuarios.eliminarUsuario(codigo);
                         MainAdministrador mainAdmin = new MainAdministrador();
+                        Mensaje mensaje = new Mensaje("¡Doctor Eliminado Exitosamente!", true);
                         this.setVisible(false);
                         this.dispose();
                     }else{
@@ -1092,6 +1095,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
                         ListaUsuarios.addUsuarios(pac);
                         MainAdministrador mainAdmin = new MainAdministrador();
                         mainAdmin.tabbedPane.setSelectedIndex(1);
+                        Mensaje mensaje = new Mensaje("¡Paciente Guardado Exitosamente!", true);
                         this.setVisible(false);
                         this.dispose();
 
@@ -1344,6 +1348,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
                                 ListaUsuarios.editUsuario(pacienteNuevo, codigo);
                                 MainAdministrador mainAdmin = new MainAdministrador();
                                 mainAdmin.tabbedPane.setSelectedIndex(1);
+                                Mensaje mensaje = new Mensaje("¡Paciente Actualizado Exitosamente!", true);
                                 this.setVisible(false);
                                 this.dispose();
                             }else{
@@ -1419,6 +1424,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
                         ListaUsuarios.eliminarUsuario(codigo);
                         MainAdministrador mainAdmin = new MainAdministrador();
                         mainAdmin.tabbedPane.setSelectedIndex(1);
+                        Mensaje mensaje = new Mensaje("¡Paciente Eliminado Exitosamente!", true);
                         this.setVisible(false);
                         this.dispose();
                     }else{
@@ -1542,7 +1548,8 @@ public class MainAdministrador extends JFrame implements ActionListener{
                         Producto prod = new Producto(nombre,Integer.parseInt(precio), descripcion, Integer.parseInt(cantidad));
                         ListaProductos.addProducto(prod);
                         MainAdministrador mainAdmin = new MainAdministrador();
-                                            mainAdmin.tabbedPane.setSelectedIndex(2);
+                        mainAdmin.tabbedPane.setSelectedIndex(2);
+                        Mensaje mensaje = new Mensaje("¡Producto Guardado Exitosamente!", true);
                         this.setVisible(false);
                         this.dispose();
                     } else {
@@ -1752,6 +1759,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
                                 ListaProductos.editProducto(productoNuevo, codigo);
                                 MainAdministrador mainAdmin = new MainAdministrador();
                                 mainAdmin.tabbedPane.setSelectedIndex(2);
+                                Mensaje mensaje = new Mensaje("¡Producto Actualizado Exitosamente!", true);
                                 this.setVisible(false);
                                 this.dispose();
                             }else{
@@ -1827,6 +1835,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
                     ListaProductos.eliminarProducto(codigo);
                     MainAdministrador mainAdmin = new MainAdministrador();
                     mainAdmin.tabbedPane.setSelectedIndex(2);
+                    Mensaje mensaje = new Mensaje("¡Producto Eliminado Exitosamente!", true);
                     this.setVisible(false);
                     this.dispose();
 

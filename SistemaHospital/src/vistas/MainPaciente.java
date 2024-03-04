@@ -238,6 +238,15 @@ public class MainPaciente extends JFrame implements ActionListener{
         panelSolicitar.add(horaComboBox);*/
         
         
+        JButton reiniciarCita = new JButton("Reiniciar");
+        reiniciarCita.setBounds(20,510,150,40);
+        reiniciarCita.setBackground(Colors.principalBotones);
+        reiniciarCita.setFont(Fuentes.getPrincipalFontSize(12, true));
+        reiniciarCita.setForeground(Colors.white);
+        reiniciarCita.addActionListener(this);
+        panelSolicitar.add(reiniciarCita);
+        
+        
         JButton botonCrearCita = new JButton("Generar Cita");
         botonCrearCita.setBounds(450,500,250,50);
         botonCrearCita.setBackground(Colors.principalBotones);
@@ -263,7 +272,7 @@ public class MainPaciente extends JFrame implements ActionListener{
         panelEstado.add(tituloEstadoLabel);
         
         
-        //Tabla de Medicos
+        //Tabla de Horarios
         ArrayList<Horario> listaHorarios = ListaHorarios.getHorarios();
         int contadorHorariosPersonales = 0;
         for (int i = 0; i < listaHorarios.size(); i++) {
@@ -304,7 +313,7 @@ public class MainPaciente extends JFrame implements ActionListener{
         JScrollPane spHorario = new JScrollPane(tablaHorario);
         spHorario.setBounds(10, 100, 1100, 400);
         panelEstado.add(spHorario);
-        //Fin tabla
+        //Fin Horarios
         
         
         
@@ -411,6 +420,7 @@ public class MainPaciente extends JFrame implements ActionListener{
             doctorComboBox.setModel( model );
             doctorComboBox.setEnabled(true);
             buscarHorarioButton.setEnabled(true);
+            especialidadComboBox.setEnabled(false);
             //doctorComboBox = new JComboBox(listaDoctor);
         }
     
@@ -433,28 +443,38 @@ public class MainPaciente extends JFrame implements ActionListener{
                 HorariosId[i] = listaHorariosFiltrados.get(i).getId();
                 //listaHoras[i] = listaHorariosFiltrados.get(i).getHora()+":"+listaHorariosFiltrados.get(i).getMinutos();
             }
-            
+
             
             DefaultComboBoxModel<String> modelFechas = new DefaultComboBoxModel<>(listaFechasyHoras);
             //DefaultComboBoxModel<String> modelHoras = new DefaultComboBoxModel<>(listaHoras);
             fechaComboBox.setModel(modelFechas);
             //horaComboBox.setModel(modelHoras);
-            
+            doctorComboBox.setEnabled(false);
             fechaComboBox.setEnabled(true);
             //horaComboBox.setEnabled(true);
         }
 
         if(e.getActionCommand().equals("Generar Cita")){
             int index = fechaComboBox.getSelectedIndex();
-            Horario horario = ListaHorarios.getHorario(HorariosId[index]);
-            System.out.println(horario.getId());
-            if(horario.getId_Paciente() == -1){
-                horario.setId_Paciente(SesionActual.getId());
-                ListaHorarios.editHorario(horario, horario.getId());
-                MainPaciente mainPaciente = new MainPaciente();
+            String motivo = motivoTextArea.getText();
+            if(index != -1){
+                Horario horario = ListaHorarios.getHorario(HorariosId[index]);
+                if (horario.getId_Paciente() == -1) {
+                    
+                    
+                    ListaHorarios.setPacienteID(horario.getId(), SesionActual.getId());
+                    ListaHorarios.setMotivoHorario(horario.getId(), motivo);
+                    MainPaciente mainPaciente = new MainPaciente();
+                    Mensaje mensaje = new Mensaje("¡Cita Agendada Exitosamente!", true);
+                    this.setVisible(false);
+                    this.dispose();
+                } else {
+                    Mensaje mensaje = new Mensaje("El horario esta ocupado", false);
+                }
             }else{
-                Mensaje mensaje = new Mensaje("El horario esta ocupado",false);
+                Mensaje mensaje = new Mensaje("No hay horarios disponibles",false);
             }
+
         }
         
         
@@ -568,6 +588,7 @@ public class MainPaciente extends JFrame implements ActionListener{
                     ListaUsuarios.editUsuario(pac, SesionActual.getId());
                     Autenticacion.actualizarUsuario(SesionActual.getId());
                     MainPaciente mainAdmin = new MainPaciente();
+                    Mensaje mensaje = new Mensaje("¡Perfil Actualizado Exitosamente!", true);
                     this.setVisible(false);
                     this.dispose();
 
@@ -579,7 +600,12 @@ public class MainPaciente extends JFrame implements ActionListener{
             }
             
         }
-    
+        
+        if(e.getActionCommand().equals("Reiniciar")){
+            MainPaciente mainPac = new MainPaciente();
+            this.setVisible(false);
+            this.dispose();
+        }
     
     }
     
