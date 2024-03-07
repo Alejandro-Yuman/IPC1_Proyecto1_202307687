@@ -176,9 +176,9 @@ public class Register extends JFrame implements ActionListener{
                 if (genero != 'X') {
                     if (edad >= 1 && edad <= 100) {
                         Paciente pac = new Paciente(nombre, apellidos, edad, genero, password);
-                        ListaUsuarios.addUsuarios(pac);
+                        int idUsuarioCreado= ListaUsuarios.addUsuariosReturnId(pac);
                         Login login = new Login();
-                        Mensaje mensaje = new Mensaje("¡Cuenta Creada!", true);
+                        Mensaje mensaje = new Mensaje("¡Cuenta Creada!, su id de inicio de sesión es: "+idUsuarioCreado, true);
                         this.setVisible(false);
                         this.dispose();
                     } else {

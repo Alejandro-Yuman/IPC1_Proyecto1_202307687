@@ -85,7 +85,7 @@ public class MainAdministrador extends JFrame implements ActionListener{
         
         
         JLabel tipoUsuarioLabel = new JLabel("Administrador");
-        tipoUsuarioLabel.setFont(Fuentes.getPrincipalFontSize(12, true));
+        tipoUsuarioLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
         tipoUsuarioLabel.setBounds(150,10,170,30);
         this.add(tipoUsuarioLabel);
         
@@ -126,7 +126,13 @@ public class MainAdministrador extends JFrame implements ActionListener{
             //datos[i][3]=listaMedicos.get(i).getSexo();
             datosMedico[i][4]=listaMedicos.get(i).getEdad();
             datosMedico[i][5]=listaMedicos.get(i).getEspecialidad();
-            datosMedico[i][6]=listaMedicos.get(i).getTelefono();
+            
+            if(listaMedicos.get(i).getTelefono() == 0){
+                datosMedico[i][6]="Sin telefono";
+            }else{
+                datosMedico[i][6]=listaMedicos.get(i).getTelefono();
+            }
+            
             
         }
 

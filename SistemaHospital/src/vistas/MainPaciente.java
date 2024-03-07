@@ -99,7 +99,7 @@ public class MainPaciente extends JFrame implements ActionListener{
         
         
         JLabel tipoUsuarioLabel = new JLabel("Paciente");
-        tipoUsuarioLabel.setFont(Fuentes.getPrincipalFontSize(12, true));
+        tipoUsuarioLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
         tipoUsuarioLabel.setBounds(150,10,170,30);
         this.add(tipoUsuarioLabel);
         
@@ -251,12 +251,26 @@ public class MainPaciente extends JFrame implements ActionListener{
         panelSolicitar.add(reiniciarCita);
         
         
+        ArrayList<Horario> horariosTemp = ListaHorarios.getHorarios();
+        boolean encontrada = false;
+        for (int i = 0; i < horariosTemp.size(); i++) {
+            if(horariosTemp.get(i).getId_Paciente() == SesionActual.getId() && horariosTemp.get(i).getEstado().equals("Pendiente") ){
+                encontrada = true;
+                break;
+            }
+        }
+        
         JButton botonCrearCita = new JButton("Generar Cita");
         botonCrearCita.setBounds(450,500,250,50);
         botonCrearCita.setBackground(Colors.principalBotones);
         botonCrearCita.setFont(Fuentes.getPrincipalFontSize(12, true));
         botonCrearCita.setForeground(Colors.white);
         botonCrearCita.addActionListener(this);
+        if(encontrada){
+            botonCrearCita.setEnabled(false);
+        }else{
+            botonCrearCita.setEnabled(true);
+        }
         panelSolicitar.add(botonCrearCita);
         
         //---------------------------------------Fin Pestaña Solicitar Cita
@@ -303,7 +317,14 @@ public class MainPaciente extends JFrame implements ActionListener{
             
             datosHorario[contadorHorariosPersonales][2]=listaHorarios.get(i).getEstado();
             datosHorario[contadorHorariosPersonales][3]=listaHorarios.get(i).getDia()+"/"+listaHorarios.get(i).getMes()+"/"+listaHorarios.get(i).getYear();
-            datosHorario[contadorHorariosPersonales][4]=listaHorarios.get(i).getHora()+":"+listaHorarios.get(i).getMinutos();
+            
+            if(Integer.toString(listaHorarios.get(i).getMinutos()).length() == 1){
+                datosHorario[contadorHorariosPersonales][4]=listaHorarios.get(i).getHora()+":0"+listaHorarios.get(i).getMinutos();
+            }else{
+                datosHorario[contadorHorariosPersonales][4]=listaHorarios.get(i).getHora()+":"+listaHorarios.get(i).getMinutos();
+            }
+            
+            //datosHorario[contadorHorariosPersonales][4]=listaHorarios.get(i).getHora()+":"+listaHorarios.get(i).getMinutos();
             
             contadorHorariosPersonales++;
             }

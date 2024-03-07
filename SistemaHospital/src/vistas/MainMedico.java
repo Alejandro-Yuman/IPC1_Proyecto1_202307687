@@ -53,6 +53,13 @@ public class MainMedico extends JFrame implements ActionListener{
     JPasswordField passwordField;
     JTextField edadField;
     JTextField especialidadField;
+    
+    JTextField yearField;
+    JTextField mesField;
+    JTextField diaField;
+    JTextField horaField;
+    JTextField minutosField;
+    
 
     public MainMedico() {
         
@@ -84,7 +91,7 @@ public class MainMedico extends JFrame implements ActionListener{
         this.add(pastelButton);
         
         JLabel tipoUsuarioLabel = new JLabel("Medico");
-        tipoUsuarioLabel.setFont(Fuentes.getPrincipalFontSize(12, true));
+        tipoUsuarioLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
         tipoUsuarioLabel.setBounds(150,10,170,30);
         this.add(tipoUsuarioLabel);
         
@@ -285,6 +292,7 @@ public class MainMedico extends JFrame implements ActionListener{
                     public void actionPerformed(ActionEvent e) {
                         ListaHorarios.terminarCita(horariosFiltrados.get(iFinal).getId());
                         MainMedico login = new MainMedico();
+                        desaparecerVentana();
                         Mensaje mensaje = new Mensaje("¡Cita Atentida!", true);
                     }
                 });
@@ -300,6 +308,7 @@ public class MainMedico extends JFrame implements ActionListener{
                     public void actionPerformed(ActionEvent e) {
                         ListaHorarios.rechazarCita(horariosFiltrados.get(iFinal).getId());
                         MainMedico login = new MainMedico();
+                        desaparecerVentana();
                         Mensaje mensaje = new Mensaje("¡Cita Rechazada!", true);
                     }
                 });
@@ -331,8 +340,96 @@ public class MainMedico extends JFrame implements ActionListener{
         tituloAsignarCitasLabel.setBounds(10,10,300,30);
         tituloAsignarCitasLabel.setFont(Fuentes.getPrincipalFontSize(14, true));
         panelEstado.add(tituloAsignarCitasLabel);
-
         
+        JLabel yearLabel = new JLabel("Año");
+        yearLabel.setFont(Fuentes.getPrincipalFontSize(12, true));
+        yearLabel.setBounds(50, 70, 100, 30);
+        panelEstado.add(yearLabel);
+
+        yearField = new JTextField();
+        yearField.setBounds(110, 70, 200, 30);
+        panelEstado.add(yearField);
+        
+        JLabel mesLabel = new JLabel("Mes");
+        mesLabel.setFont(Fuentes.getPrincipalFontSize(12, true));
+        mesLabel.setBounds(400, 70, 100, 30);
+        panelEstado.add(mesLabel);
+
+        mesField = new JTextField();
+        mesField.setBounds(450, 70, 200, 30);
+        panelEstado.add(mesField);
+        
+        JLabel diaLabel = new JLabel("Dia");
+        diaLabel.setFont(Fuentes.getPrincipalFontSize(12, true));
+        diaLabel.setBounds(750, 70, 100, 30);
+        panelEstado.add(diaLabel);
+
+        diaField = new JTextField();
+        diaField.setBounds(800, 70, 200, 30);
+        panelEstado.add(diaField);
+
+        JLabel horaLabel = new JLabel("Hora");
+        horaLabel.setFont(Fuentes.getPrincipalFontSize(12, true));
+        horaLabel.setBounds(50, 150, 100, 30);
+        panelEstado.add(horaLabel);
+
+        horaField = new JTextField();
+        horaField.setBounds(110, 150, 200, 30);
+        panelEstado.add(horaField);
+        
+        JLabel minutosLabel = new JLabel("Minutos");
+        minutosLabel.setFont(Fuentes.getPrincipalFontSize(12, true));
+        minutosLabel.setBounds(380, 150, 100, 30);
+        panelEstado.add(minutosLabel);
+
+        minutosField = new JTextField();
+        minutosField.setBounds(450, 150, 200, 30);
+        panelEstado.add(minutosField);
+        
+        JButton agregarHorarioButton = new JButton("Agregar Horario");
+        agregarHorarioButton.setBounds(800,130,150,50);
+        agregarHorarioButton.setBackground(Colors.principalBotones);
+        agregarHorarioButton.setFont(Fuentes.getPrincipalFontSize(12, true));
+        agregarHorarioButton.setForeground(Colors.white);
+        agregarHorarioButton.addActionListener(this);
+        panelEstado.add(agregarHorarioButton);
+        
+        //Tabla de Horarios
+        ArrayList<Horario> listaHorarios = ListaHorarios.getHorarios();
+        int contadorHorariosPersonales = 0;
+        for (int i = 0; i < listaHorarios.size(); i++) {
+            if(listaHorarios.get(i).getId_Medico()== SesionActual.getId()){
+                contadorHorariosPersonales++;
+            }
+        }
+        Object[][] datosHorario = new Object[contadorHorariosPersonales][5];
+        
+        contadorHorariosPersonales = 0;
+        for (int i = 0; i < listaHorarios.size(); i++) {
+            if(listaHorarios.get(i).getId_Medico()== SesionActual.getId()){
+            datosHorario[contadorHorariosPersonales][0]=listaHorarios.get(i).getId();
+            datosHorario[contadorHorariosPersonales][1]=listaHorarios.get(i).getDia()+"/"+listaHorarios.get(i).getMes()+"/"+listaHorarios.get(i).getYear();
+            
+            if(Integer.toString(listaHorarios.get(i).getMinutos()).length() == 1){
+                datosHorario[contadorHorariosPersonales][2]=listaHorarios.get(i).getHora()+":0"+listaHorarios.get(i).getMinutos();
+            }else{
+                datosHorario[contadorHorariosPersonales][2]=listaHorarios.get(i).getHora()+":"+listaHorarios.get(i).getMinutos();
+            }
+            
+            contadorHorariosPersonales++;
+            
+            }
+        }
+
+        String[] columnasHorario = {"Codigo","Fecha","Hora"};
+        
+        JTable tablaHorario = new JTable(datosHorario, columnasHorario);
+        tablaHorario.getColumnModel().getColumn(0).setPreferredWidth(1);
+        tablaHorario.setFont(Fuentes.getPrincipalFontSize(11,false));
+        JScrollPane spHorario = new JScrollPane(tablaHorario);
+        spHorario.setBounds(20, 200, 1100, 330);
+        panelEstado.add(spHorario);
+        //Fin Horarios
         //---------------------------------------Fin Pestaña Asignar citas
                 
         
@@ -508,6 +605,43 @@ public class MainMedico extends JFrame implements ActionListener{
             this.dispose();
         }
         
+        if(e.getActionCommand().equals("Agregar Horario")){
+            boolean error = false;
+            int year = 0;
+            int mes= 0;
+            int dia= 0;
+            int hora= 0;
+            int minutos= 0;
+            try {
+                year = Integer.parseInt(yearField.getText());
+                mes = Integer.parseInt(mesField.getText());
+                dia = Integer.parseInt(diaField.getText());
+                hora = Integer.parseInt(horaField.getText());
+                minutos = Integer.parseInt(minutosField.getText());
+            } catch (NumberFormatException NFE) {
+                error = true;
+            }
+            if (!error) {
+
+                Horario horario = new Horario(SesionActual.getId(),year,mes,dia,hora,minutos);
+                ListaHorarios.addHorario(horario);
+                MainMedico mainMedico = new MainMedico();
+                mainMedico.tabbedPane.setSelectedIndex(1);
+                
+                this.setVisible(false);
+                this.dispose();
+                Mensaje mensaje = new Mensaje("Horario agregado exitosamente.",true);
+                
+            }else{
+                Mensaje mensaje = new Mensaje("Ingrese solamente numeros.",false);
+            }
+
+        }
+    }
+    
+    void desaparecerVentana(){
+        this.setVisible(false);
+        this.dispose();
     }
     
 }

@@ -44,6 +44,13 @@ public  class ListaUsuarios {
         usuarios.add(usuarioNuevo);
     }
     
+    public static int addUsuariosReturnId(Usuario usuarioNuevo){
+        int id = generarId(usuarioNuevo);
+        usuarioNuevo.setId(id);
+        usuarios.add(usuarioNuevo);
+        return id;
+    }
+    
     public static void editUsuario(Usuario usuarioNuevo, int id){
         for (int i = 0; i < usuarios.size(); i++) {
             if(usuarios.get(i).getId() == id){
