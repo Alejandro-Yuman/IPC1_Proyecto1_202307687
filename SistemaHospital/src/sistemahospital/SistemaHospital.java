@@ -36,32 +36,8 @@ public class SistemaHospital {
         ListaUsuarios.addAdministrador(administrador);
 
         
-        Autenticacion.registro("Eso tilines 1 Paciente","Ap",18,'M',"1");
-        Autenticacion.registro("Eso tilines 2 Paciente","Ap",18,'M',"2");
-        Medico med = new Medico("Medico 1","Don",18,'M',"3",20202020,"Doctor psiquiatra");
-        ListaUsuarios.addUsuarios(med);
-        Medico med2 = new Medico("Medico 2","Doña",22,'F',"4","Doctora psiquiatra");
-        ListaUsuarios.addUsuarios(med2);
-        Medico med3 = new Medico("Medico 3","Donsito",22,'F',"Diosayudame","Doctor psiquiatra");
-        ListaUsuarios.addUsuarios(med3);
-        Medico med4 = new Medico("Medico 4","Donsito",22,'F',"Diosayudame","Computadora");
-        ListaUsuarios.addUsuarios(med4);
-        
-        
-        
-        for (int i = 0; i < 10; i++) {
-            Producto producto = new Producto("Cerveza Duff de los sinsons que toma homer dou",1000,"Cerveza Duff de los sinsons que toma homer dou",20);
-            ListaProductos.addProducto(producto);
-        }
-        
-        for (int i = 0; i < 10; i++) {
-            Horario horario = new Horario(4,2024,3,2,20,06);
-            ListaHorarios.addHorario(horario);
-        }
-        Horario horario2 = new Horario(4,2,2024,3,2,20,06);
-        ListaHorarios.addHorario(horario2);
 
-        
+
         //ListaProductos.printProductos();
         ListaUsuarios.printUsuarios();
         ListaHorarios.printHorarios();
